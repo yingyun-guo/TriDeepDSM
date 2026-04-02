@@ -1,0 +1,37 @@
+name: epsmic-env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - pandas
+  - scikit-learn
+  - joblib
+  - protobuf
+  - tqdm
+  - matplotlib
+  - pysam
+  - samtools
+  - htslib=1.20
+  - ucsc-bigwigaverageoverbed
+  - ucsc-bigwigtobedgraph
+  - ensembl-vep
+  - rdkit
+  - pytorch
+  - torchvision
+  - torchaudio
+  - cpuonly
+  - einops
+  - xgboost=2.1.2
+  - lightgbm
+  - catboost
+  - libpng
+  - libjpeg-turbo
+  - python-kaleido
+  - git-lfs
+  - pip:
+    - gradio
+    - spliceai
