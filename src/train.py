@@ -1,9 +1,3 @@
-# train_model7-5-1.py (引入 GridSearchCV 进行精确调参，保留预测得分)将MAX_FEATURES从激进的 150 降回了 90。
-# #加入十折交叉验证
-# 加入mate
-# # train_model7-5-1.py (引入 GridSearchCV 进行精确调参，保留预测得分)将MAX_FEATURES从激进的 150 降回了 90。
-# #加入十折交叉验证
-# 加入mate
 import os
 import sys
 import time
@@ -25,19 +19,15 @@ from sklearn.model_selection import StratifiedKFold
 from xgboost import XGBClassifier
 import joblib
 import numpy as np
-# === 新增预处理库 ===
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import QuantileTransformer
-
-# 引入 Dataset 和 Model
-from Datasets.Dataset_TriView_new import TriViewDataset
-from Datasets.Dataset_Integrated_new_7_1 import IntegratedDataset
-from models.TriView_Net_1 import TriView_Net
+from Datasets.dataset_triview import TriViewDataset
+from Datasets.dataset_tabular import IntegratedDataset
+from models.TriView_Net import TriView_Net
 import warnings
-
 warnings.filterwarnings("ignore")
-
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ==============================================================================
 # 高级特征选择器 (融合了 去冗余 + 树模型排名 + 递归消除)
@@ -60,11 +50,7 @@ class AdvancedFeatureSelector:
         y: labels
         """
         print("\n>>> [Advanced Feature Selection] Start...")
-
-        # 1. 强制转换标签为整数 (以防万一)
         y = np.array(y).astype(int)
-
-        # 0. 数据格式转换
         if isinstance(X, pd.DataFrame):
             X_vals = X.values
             feat_names = X.columns.tolist()
@@ -80,7 +66,6 @@ class AdvancedFeatureSelector:
         print(f"      Remaining: {len(remain_idx_1)} / {X_vals.shape[1]}")
 
         # === Step 2: 初步筛选 (Importance) ===
-        # 这里用 XGBoost 或 LGBM 都可以，因为只是简单的 .fit，不会报错
         print("   Phase 2: Pre-filtering with XGBoost (Importance)...")
 
         xgb = XGBClassifier(
@@ -118,9 +103,6 @@ class AdvancedFeatureSelector:
 
         # === Step 4: RFECV (递归特征消除) ===
         print("   Phase 4: Running RFECV (Wrapper Method) to find optimal subset...")
-
-        # 【关键修复】将 RFECV 内部的基模型改为 LGBMClassifier
-        # LightGBM 不会出现 "Got a regressor" 的兼容性报错
         from lightgbm import LGBMClassifier
 
         clf = LGBMClassifier(
@@ -136,7 +118,7 @@ class AdvancedFeatureSelector:
             cv=StratifiedKFold(5),
             scoring='roc_auc',
             min_features_to_select=self.min_features,
-            n_jobs=-1  # 如果依然报错，可以尝试改为 n_jobs=1，但通常换LGBM就好了
+            n_jobs=-1
         )
 
         rfecv.fit(X_final_pool, y)
@@ -319,18 +301,16 @@ class DeepFeatureExtractor:
 # ==============================================================================
 if __name__ == "__main__":
     CONFIG = {
-        "PATH_META": "Datasets/processed_meta",
-        "PATH_SHAPE": "Datasets/processed_shape",
-        "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
-        "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
-        "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
-        "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+        "PATH_META": os.path.join(PROJECT_ROOT, "Datasets", "processed_meta"),
+        "PATH_SHAPE": os.path.join(PROJECT_ROOT, "Datasets", "processed_shape"),
+        "PATH_BERT": os.path.join(PROJECT_ROOT, "feature", "DNAbert-2"),
+        "PATH_VCF_DIR": os.path.join(PROJECT_ROOT, "data"),
+        "PRETRAINED_MODEL_DIR": os.path.join(PROJECT_ROOT, "out", "model"),
+        "OUTPUT_DIR": os.path.join(PROJECT_ROOT, "out", "model"),
         "MODEL_PARAMS": {"bert_in_dim": 768, "spatial_in_dim": 19, "num_experts": 5, "fusion_dropout": 0.2},
         "N_FOLDS": 10, "BATCH_SIZE": 64, "GPU_ID": "0",
-
         # --- 特征选择配置 ---
         "FEATURE_SELECTION": True,
-        # AdvancedFeatureSelector 自动决定数量，但我们可以设置下限
         "MIN_FEATURES": 200,
     }
 
@@ -400,9 +380,7 @@ if __name__ == "__main__":
     joblib.dump(fusion_imputer, os.path.join(CONFIG["OUTPUT_DIR"], "fusion_imputer.pkl"))
 
     # ==========================================================================
-    # 5. [修正] 全局高级特征选择
-    #    我们在这里一次性做完所有特征选择，更新 X_train_fused 和 X_test_fused
-    #    这样后续的 GridSearch, CV 和 Final Train 都使用同一套特征子集。
+    # 5. 全局高级特征选择
     # ==========================================================================
     if CONFIG["FEATURE_SELECTION"]:
         logger.info(">>> Running Advanced Feature Selection (Global)...")
@@ -414,15 +392,12 @@ if __name__ == "__main__":
             step=20,  # 每次递归删除5个特征，加速
             min_features_to_select=CONFIG["MIN_FEATURES"]
         )
-
         # 训练选择器
         adv_selector.fit(X_train_fused, y_train)
-
-        # 转换数据 (覆盖原有变量，节省内存)
+        # 转换数据
         X_train_final = adv_selector.transform(X_train_fused)
         X_test_final = adv_selector.transform(X_test_fused)
-
-        # 保存选择器 (测试脚本必须要用!)
+        # 保存选择器
         joblib.dump(adv_selector, os.path.join(CONFIG["OUTPUT_DIR"], "final_feature_selector.pkl"))
 
         logger.info(f"Feature Selection Complete. New Shape: {X_train_final.shape}")
@@ -467,7 +442,6 @@ if __name__ == "__main__":
 
     # ==========================================================================
     # 7. Strict 10-Fold CV (OOF Generation)
-    #    注意：这里不再进行内部特征选择，直接使用 X_train_final
     # ==========================================================================
     logger.info("\n>>> executing Strict 10-Fold CV (OOF)...")
     oof_probs = np.zeros(len(y_train))
@@ -515,8 +489,6 @@ if __name__ == "__main__":
     # 9. 最终全量训练
     # ==========================================================================
     logger.info("\n>>> Retraining Final Model on Full Data...")
-
-    # 也不再需要内部特征选择，直接用 X_train_final
     X_tr_final, X_val_final, y_tr_final, y_val_final = train_test_split(
         X_train_final, y_train, test_size=0.1, random_state=42, stratify=y_train
     )

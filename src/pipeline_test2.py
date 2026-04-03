@@ -1,5 +1,8 @@
 import os
 import sys
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if PROJECT_ROOT not in sys.path:
+    sys.path.append(PROJECT_ROOT)
 import numpy as np
 import pandas as pd
 import torch
@@ -12,20 +15,14 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import QuantileTransformer
 import warnings
-
-# 引入你的模型定义
-from models.TriView_Net_1 import TriView_Net
-from Datasets.Dataset_Integrated_new_7_1 import IntegratedDataset
-
+from models.TriView_Net import TriView_Net
+from Datasets.Dataset_Integrated import IntegratedDataset
 from lightgbm import LGBMClassifier
 from xgboost import XGBClassifier
 from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier, HistGradientBoostingClassifier
-
 warnings.filterwarnings("ignore")
-
-
 # ==============================================================================
-# 关键类定义 (必须存在以支持 joblib.load)
+# 关键类定义
 # ==============================================================================
 class AdvancedFeatureSelector:
     def __init__(self, output_dir, correlation_threshold=0.95, step=5, min_features_to_select=30):
@@ -48,11 +45,10 @@ class AdvancedFeatureSelector:
 
 
 # ================= 配置 =================
-PATH_TEST2 = "/data/gyy/Project/DeepSTF-new/DeepSTF/Datasets/aligned_test2_model7-5-1"
-MODEL_DIR = "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/"
-DEEP_MODEL_DIR = "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/"#model-7
+PATH_TEST2 = os.path.join(PROJECT_ROOT, "Datasets", "aligned_test2")
+MODEL_DIR = os.path.join(PROJECT_ROOT, "out", "model")
+DEEP_MODEL_DIR = os.path.join(PROJECT_ROOT, "out", "model")
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-
 
 # ================= 工具函数 =================
 class DeepFeatureExtractorTest:
@@ -108,8 +104,6 @@ def calculate_metrics_full(y_true, y_prob, threshold=0.5):
     precision = metrics.precision_score(y_true, y_pred, zero_division=0)
     f1 = metrics.f1_score(y_true, y_pred)
     specificity = tn / (tn + fp) if (tn + fp) > 0 else 0.0
-
-    # 曲线指标
     try:
         roc_auc = metrics.roc_auc_score(y_true, y_prob)
     except:
@@ -129,11 +123,9 @@ def calculate_metrics_full(y_true, y_prob, threshold=0.5):
         "Prec": precision  # 加回 Precision
     }
 
-
 # ================= 主流程 =================
 if __name__ == "__main__":
-    print(f"\n>>> PIPELINE: Balanced Validation v4 (Full Metrics + AutoFix) <<<")
-
+    print(f"\n>>> PIPELINE: Balanced Validation <<<")
     # 1. 加载数据
     print(">>> [Step 1] Loading Data...")
     try:
@@ -148,18 +140,22 @@ if __name__ == "__main__":
     except FileNotFoundError:
         print("Data missing.")
         sys.exit(1)
-
     y_test = np.concatenate([e_y, s_y])
     X_tab = np.concatenate([e_tab, s_tab])
     X_bt = np.concatenate([e_bt, s_bt])
     X_sp = np.concatenate([e_sp, s_sp])
 
-    # 2. Meta Features
-    print(">>> [Step 2] Generating Meta Features...")
+    # ==========================================================================
+    # [Step 2] Generating Meta Features (动态训练恢复 0.82 + 为Django保存)
+    # ==========================================================================
+    print(">>> [Step 2] Generating Meta Features & Saving for Django...")
+
+    # 必须加载训练集，让专家模型现场学习最新的 2003 维特征！
     train_ds = IntegratedDataset('training')
     X_train = train_ds.feat_tabular
     y_train = train_ds.labels
 
+    # 重新训练预处理管道
     pipe = Pipeline([
         ('imputer', SimpleImputer(strategy='mean')),
         ('scaler', QuantileTransformer(output_distribution='normal', random_state=42))
@@ -167,6 +163,10 @@ if __name__ == "__main__":
     X_train_s = pipe.fit_transform(X_train)
     X_test_s = pipe.transform(X_tab)
 
+    # 【网页部署关键】专门为 Django 保存这个匹配 2003 维特征的 Pipeline！
+    joblib.dump(pipe, os.path.join(MODEL_DIR, "django_expert_pipeline.pkl"))
+
+    # 注意：字典顺序必须是 LGBM, XGB, RF, ERT, HistGB，这是 0.82 的特征密码！
     experts = {
         'LGBM': LGBMClassifier(n_estimators=200, num_leaves=15, learning_rate=0.03, verbose=-1, n_jobs=-1,
                                random_state=42),
@@ -179,14 +179,56 @@ if __name__ == "__main__":
 
     meta_preds = []
     for name, clf in experts.items():
+        # 当场训练！
         clf.fit(X_train_s, y_train)
-        meta_preds.append(clf.predict_proba(X_test_s)[:, 1].reshape(-1, 1))
-    X_meta = np.concatenate(meta_preds, axis=1)
 
-    # 3. Pipeline for Final Model
+        # 【网页部署关键】为 Django 保存这些新鲜出炉、绝不报错的专家模型！
+        joblib.dump(clf, os.path.join(MODEL_DIR, f"django_{name}_expert.pkl"))
+
+        meta_preds.append(clf.predict_proba(X_test_s)[:, 1].reshape(-1, 1))
+
+    X_meta = np.concatenate(meta_preds, axis=1).astype(np.float32)
+
+    # ==========================================================================
+    # [Step 3] Loading Final Tabular Pipeline (For Fusion)
+    # ==========================================================================
     print(">>> [Step 3] Loading Final Tabular Pipeline...")
     pipe_final = joblib.load(os.path.join(MODEL_DIR, "tabular_pipeline.pkl"))
     X_tab_scaled = pipe_final.transform(X_tab)
+
+    # # 2. Meta Features
+    # print(">>> [Step 2] Generating Meta Features...")
+    # train_ds = IntegratedDataset('training')
+    # X_train = train_ds.feat_tabular
+    # y_train = train_ds.labels
+    #
+    # pipe = Pipeline([
+    #     ('imputer', SimpleImputer(strategy='mean')),
+    #     ('scaler', QuantileTransformer(output_distribution='normal', random_state=42))
+    # ])
+    # X_train_s = pipe.fit_transform(X_train)
+    # X_test_s = pipe.transform(X_tab)
+    #
+    # experts = {
+    #     'LGBM': LGBMClassifier(n_estimators=200, num_leaves=15, learning_rate=0.03, verbose=-1, n_jobs=-1,
+    #                            random_state=42),
+    #     'XGB': XGBClassifier(n_estimators=200, max_depth=4, learning_rate=0.03, n_jobs=-1, eval_metric='auc',
+    #                          random_state=42),
+    #     'RF': RandomForestClassifier(n_estimators=300, max_depth=8, min_samples_leaf=5, n_jobs=-1, random_state=42),
+    #     'ERT': ExtraTreesClassifier(n_estimators=300, max_depth=8, min_samples_leaf=5, n_jobs=-1, random_state=42),
+    #     'HistGB': HistGradientBoostingClassifier(max_iter=150, max_depth=5, learning_rate=0.03, random_state=42)
+    # }
+    #
+    # meta_preds = []
+    # for name, clf in experts.items():
+    #     clf.fit(X_train_s, y_train)
+    #     meta_preds.append(clf.predict_proba(X_test_s)[:, 1].reshape(-1, 1))
+    # X_meta = np.concatenate(meta_preds, axis=1)
+    #
+    # # 3. Pipeline for Final Model
+    # print(">>> [Step 3] Loading Final Tabular Pipeline...")
+    # pipe_final = joblib.load(os.path.join(MODEL_DIR, "tabular_pipeline.pkl"))
+    # X_tab_scaled = pipe_final.transform(X_tab)
 
     # 4. Deep Features
     print(">>> [Step 4] Extracting Deep Features...")
@@ -207,12 +249,12 @@ if __name__ == "__main__":
     X_fused = np.nan_to_num(X_fused, nan=np.nan, posinf=np.nan, neginf=np.nan)
     X_fused = fusion_imputer.transform(X_fused)
 
-    print(f"    [INFO] Raw Fused Dimension: {X_fused.shape[1]}")
+    print(f"[INFO] Raw Fused Dimension: {X_fused.shape[1]}")
 
     # 3. 加载模型
     clf_final = joblib.load(os.path.join(MODEL_DIR, "final_lightgbm.pkl"))
     expected_features = clf_final.n_features_in_
-    print(f"    [INFO] Model Expects: {expected_features} features")
+    print(f"[INFO] Model Expects: {expected_features} features")
 
     # 4. 加载选择器
     selector_path = os.path.join(MODEL_DIR, "final_feature_selector.pkl")
@@ -224,31 +266,30 @@ if __name__ == "__main__":
             selector = joblib.load(selector_path)
             # 执行转换
             X_temp = selector.transform(X_fused)
-            print(f"    [INFO] Data transformed from {X_fused.shape[1]} -> {X_temp.shape[1]}")
+            print(f" [INFO] Data transformed from {X_fused.shape[1]} -> {X_temp.shape[1]}")
 
             if X_temp.shape[1] == expected_features:
-                print("    [SUCCESS] Dimensions matched perfectly.")
+                print(" [SUCCESS] Dimensions matched perfectly.")
                 X_final = X_temp
             else:
-                print(f"    [WARNING] Selector output {X_temp.shape[1]} != Model Input {expected_features}")
+                print(f"[WARNING] Selector output {X_temp.shape[1]} != Model Input {expected_features}")
         except Exception as e:
-            print(f"    [ERROR] Failed to load selector: {e}")
+            print(f"[ERROR] Failed to load selector: {e}")
     else:
-        print(f"    [WARNING] Selector file NOT found at {selector_path}")
+        print(f" [WARNING] Selector file NOT found at {selector_path}")
 
-    # 5. 保底修复 (防止崩溃)
+    # 5. 保底修复
     if X_final.shape[1] != expected_features:
-        print(f"    [CRITICAL FIX] Still mismatch. Forcing truncation/padding...")
+        print(f"[CRITICAL FIX] Still mismatch. Forcing truncation/padding...")
         if X_final.shape[1] > expected_features:
             X_final = X_final[:, :expected_features]
         else:
             pad = np.zeros((X_final.shape[0], expected_features - X_final.shape[1]))
             X_final = np.concatenate([X_final, pad], axis=1)
-        print(f"    [FIX RESULT] New shape: {X_final.shape}")
+        print(f"[FIX RESULT] New shape: {X_final.shape}")
 
     # 预测
     probs = clf_final.predict_proba(X_final)[:, 1]
-
     # 读取阈值
     try:
         with open(os.path.join(MODEL_DIR, "optimal_params.json"), "r") as f:
@@ -256,7 +297,6 @@ if __name__ == "__main__":
         print(f">>> Optimal Threshold: {best_thr:.4f}")
     except:
         best_thr = 0.5
-
     # 评估
     print("\n" + "=" * 80)
     print(f"RESULTS (Mean ± Std over 100 runs)")
@@ -289,7 +329,7 @@ if __name__ == "__main__":
     print("-" * 60)
     print(f"   Sens : {df_res['Sens'].mean():.4f} ± {df_res['Sens'].std():.4f}")
     print(f"   Spec : {df_res['Spec'].mean():.4f} ± {df_res['Spec'].std():.4f}")
-    print(f"   Prec : {df_res['Prec'].mean():.4f} ± {df_res['Prec'].std():.4f}")  # 已加回
+    print(f"   Prec : {df_res['Prec'].mean():.4f} ± {df_res['Prec'].std():.4f}")
 
     df_res.to_csv(os.path.join(MODEL_DIR, "test2_balanced_results_7_5_3_full.csv"), index=False)
 

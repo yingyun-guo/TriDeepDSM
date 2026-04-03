@@ -12,12 +12,9 @@ from torch.utils.data import DataLoader, Subset
 from sklearn.model_selection import StratifiedKFold
 from sklearn import metrics
 import joblib
-
-# 引入数据集和模型
-# 确保你的 Datasets/Dataset_TriView.py 是支持 config 参数的那个版本
-from Datasets.Dataset_TriView_new import TriViewDataset
-from models.TriView_Net_1 import TriView_Net
-
+from Datasets.Dataset_TriView import TriViewDataset
+from models.TriView_Net import TriView_Net
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ==============================================================================
 # SECTION 1: 辅助函数 (保持不变)
@@ -79,14 +76,12 @@ if __name__ == '__main__':
 
     CONFIG = {
         # --- 路径配置 (Model-7) ---
-        "PATH_META": "/data/gyy/Project/DeepSTF-new/DeepSTF/Datasets/processed_meta/model-7-5/",
-        "PATH_SHAPE": "Datasets/processed_shape",
-        "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
-        "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
-
-        # --- 输出配置 (Model-7) ---
-        "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
-
+        "PATH_META": os.path.join(PROJECT_ROOT, "Datasets", "processed_meta"),
+        "PATH_SHAPE": os.path.join(PROJECT_ROOT, "Datasets", "processed_shape"),
+        "PATH_BERT": os.path.join(PROJECT_ROOT, "feature", "DNAbert-2"),
+        "PATH_VCF_DIR": os.path.join(PROJECT_ROOT, "data"),
+        # --- 输出配置 ---
+        "OUTPUT_DIR": os.path.join(PROJECT_ROOT, "out", "model"),
         # --- 训练超参数 ---
         "GPU_ID": "0",
         "BATCH_SIZE": 32,
@@ -95,7 +90,6 @@ if __name__ == '__main__':
         "EPOCHS": 40,
         "N_FOLDS": 10,
         "NUM_WORKERS": 2,
-
         # --- 模型结构参数 ---
         "MODEL_PARAMS": {
             "bert_in_dim": 768,
@@ -104,7 +98,6 @@ if __name__ == '__main__':
             "fusion_dropout": 0.2
         }
     }
-
     os.environ["CUDA_VISIBLE_DEVICES"] = CONFIG["GPU_ID"]
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -118,11 +111,8 @@ if __name__ == '__main__':
 
     # --- 加载数据 ---
     logger.info(">>> Loading Datasets...")
-    # 注意：这里需要你之前的 TriViewDataset 修改已生效（支持 config 参数）
     full_train_ds = TriViewDataset(mode='training', config=CONFIG)
 
-    # 【安全措施】如果之前报过 device-assert 错误，通常是因为数据里有 NaN
-    # 为了保险起见，这里做一个简单的 inplace 替换，不影响逻辑结构
     full_train_ds.feat_spatial = np.nan_to_num(full_train_ds.feat_spatial)
     full_train_ds.feat_meta = np.nan_to_num(full_train_ds.feat_meta)
 

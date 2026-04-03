@@ -1,0 +1,1653 @@
+2026-01-10 15:42:43 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-01-10 15:42:43 | >>> Loading Datasets...
+2026-01-10 15:43:28 | >>> Preprocessing Tabular Features...
+2026-01-10 15:43:34 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-01-10 15:43:34 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/kfold_indices.pkl...
+2026-01-10 15:43:34 | >>> Starting Deep OOF Feature Extraction...
+2026-01-10 15:43:37 |    Processed OOF Fold 2/10
+2026-01-10 15:43:39 |    Processed OOF Fold 4/10
+2026-01-10 15:43:40 |    Processed OOF Fold 6/10
+2026-01-10 15:43:42 |    Processed OOF Fold 8/10
+2026-01-10 15:43:43 |    Processed OOF Fold 10/10
+2026-01-10 15:43:43 | >>> Extracting Test Deep Features (Ensemble)...
+2026-01-10 15:43:43 | >>> Starting Test Ensemble Feature Extraction...
+2026-01-10 15:43:57 | >>> Fusing Features...
+2026-01-10 15:43:58 | Fused Shape: (9014, 2456)
+2026-01-10 15:43:58 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-01-10 15:43:59 | >>> Running Advanced Feature Selection (Global)...
+2026-01-10 15:48:03 | Feature Selection Complete. New Shape: (9014, 357)
+2026-01-10 15:48:03 | >>> Running GridSearchCV...
+2026-01-10 15:53:26 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 20, 'reg_alpha': 1.0, 'reg_lambda': 1.0, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-01-10 15:53:26 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-01-10 15:53:39 | --- CV Fold 2 ---
+2026-01-10 15:53:39 |    AUC : 0.9064 | AUPR: 0.9140
+2026-01-10 15:53:39 |    ACC : 0.8226 | F1  : 0.8100
+2026-01-10 15:53:39 |    MCC : 0.6510 | Spec: 0.8891 | Sens: 0.7561
+2026-01-10 15:53:53 | --- CV Fold 4 ---
+2026-01-10 15:53:53 |    AUC : 0.8960 | AUPR: 0.9147
+2026-01-10 15:53:53 |    ACC : 0.8282 | F1  : 0.8161
+2026-01-10 15:53:53 |    MCC : 0.6620 | Spec: 0.8936 | Sens: 0.7627
+2026-01-10 15:53:57 | --- CV Fold 6 ---
+2026-01-10 15:53:57 |    AUC : 0.9031 | AUPR: 0.9164
+2026-01-10 15:53:57 |    ACC : 0.8380 | F1  : 0.8326
+2026-01-10 15:53:57 |    MCC : 0.6774 | Spec: 0.8711 | Sens: 0.8049
+2026-01-10 15:54:00 | --- CV Fold 8 ---
+2026-01-10 15:54:00 |    AUC : 0.8956 | AUPR: 0.9144
+2026-01-10 15:54:00 |    ACC : 0.8224 | F1  : 0.8077
+2026-01-10 15:54:00 |    MCC : 0.6523 | Spec: 0.8980 | Sens: 0.7467
+2026-01-10 15:54:10 | --- CV Fold 10 ---
+2026-01-10 15:54:10 |    AUC : 0.9130 | AUPR: 0.9286
+2026-01-10 15:54:10 |    ACC : 0.8491 | F1  : 0.8400
+2026-01-10 15:54:10 |    MCC : 0.7024 | Spec: 0.9047 | Sens: 0.7933
+2026-01-10 15:54:10 | 
+>>> 10-Fold CV Summary: AUC: 0.9047 | ACC: 0.8328
+2026-01-10 15:54:10 | >>> Best Threshold: 0.4841 (OOF F1: 0.8271)
+2026-01-10 15:54:10 | 
+>>> Retraining Final Model on Full Data...
+2026-01-10 15:54:13 | --- Independent Test Results ---
+2026-01-10 15:54:13 |    AUC : 0.9066 | AUPR: 0.9171
+2026-01-10 15:54:13 |    ACC : 0.8315 | F1  : 0.8232
+2026-01-10 15:54:13 |    MCC : 0.6660 | Spec: 0.8784 | Sens: 0.7847
+2026-01-10 15:54:13 | >>> All Finished.
+2026-01-12 17:40:05 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-01-12 17:40:05 | >>> Loading Datasets...
+2026-01-12 17:40:36 | >>> Preprocessing Tabular Features...
+2026-01-12 17:40:41 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-01-12 17:40:41 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/kfold_indices.pkl...
+2026-01-12 17:40:41 | >>> Starting Deep OOF Feature Extraction...
+2026-01-12 17:40:42 |    Processed OOF Fold 2/10
+2026-01-12 17:40:43 |    Processed OOF Fold 4/10
+2026-01-12 17:40:44 |    Processed OOF Fold 6/10
+2026-01-12 17:40:45 |    Processed OOF Fold 8/10
+2026-01-12 17:40:46 |    Processed OOF Fold 10/10
+2026-01-12 17:40:46 | >>> Extracting Test Deep Features (Ensemble)...
+2026-01-12 17:40:46 | >>> Starting Test Ensemble Feature Extraction...
+2026-01-12 17:41:02 | >>> Fusing Features...
+2026-01-12 17:41:02 | Fused Shape: (9014, 2456)
+2026-01-12 17:41:02 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-01-12 17:41:02 | >>> Running Advanced Feature Selection (Global)...
+2026-01-12 17:52:07 | Feature Selection Complete. New Shape: (9014, 357)
+2026-01-12 17:52:07 | >>> Running GridSearchCV...
+2026-01-12 17:59:24 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 20, 'reg_alpha': 1.0, 'reg_lambda': 1.0, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-01-12 17:59:24 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-01-12 18:02:27 | --- CV Fold 2 ---
+2026-01-12 18:02:27 |    AUC : 0.9064 | AUPR: 0.9140
+2026-01-12 18:02:27 |    ACC : 0.8226 | F1  : 0.8100
+2026-01-12 18:02:27 |    MCC : 0.6510 | Spec: 0.8891 | Sens: 0.7561
+2026-01-12 18:03:27 | --- CV Fold 4 ---
+2026-01-12 18:03:27 |    AUC : 0.8960 | AUPR: 0.9147
+2026-01-12 18:03:27 |    ACC : 0.8282 | F1  : 0.8161
+2026-01-12 18:03:27 |    MCC : 0.6620 | Spec: 0.8936 | Sens: 0.7627
+2026-01-12 18:03:30 | --- CV Fold 6 ---
+2026-01-12 18:03:30 |    AUC : 0.9031 | AUPR: 0.9164
+2026-01-12 18:03:30 |    ACC : 0.8380 | F1  : 0.8326
+2026-01-12 18:03:30 |    MCC : 0.6774 | Spec: 0.8711 | Sens: 0.8049
+2026-01-12 18:03:32 | --- CV Fold 8 ---
+2026-01-12 18:03:32 |    AUC : 0.8956 | AUPR: 0.9144
+2026-01-12 18:03:32 |    ACC : 0.8224 | F1  : 0.8077
+2026-01-12 18:03:32 |    MCC : 0.6523 | Spec: 0.8980 | Sens: 0.7467
+2026-01-12 18:03:36 | --- CV Fold 10 ---
+2026-01-12 18:03:36 |    AUC : 0.9130 | AUPR: 0.9286
+2026-01-12 18:03:36 |    ACC : 0.8491 | F1  : 0.8400
+2026-01-12 18:03:36 |    MCC : 0.7024 | Spec: 0.9047 | Sens: 0.7933
+2026-01-12 18:03:36 | 
+>>> 10-Fold CV Summary: AUC: 0.9047 | ACC: 0.8328
+2026-01-12 18:03:36 | >>> Best Threshold: 0.4841 (OOF F1: 0.8271)
+2026-01-12 18:03:36 | 
+>>> Retraining Final Model on Full Data...
+2026-01-12 18:03:38 | --- Independent Test Results ---
+2026-01-12 18:03:38 |    AUC : 0.9066 | AUPR: 0.9171
+2026-01-12 18:03:38 |    ACC : 0.8315 | F1  : 0.8232
+2026-01-12 18:03:38 |    MCC : 0.6660 | Spec: 0.8784 | Sens: 0.7847
+2026-01-12 18:03:38 | >>> All Finished.
+2026-01-13 11:00:52 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-01-13 11:00:52 | >>> Loading Datasets...
+2026-01-13 11:01:37 | >>> Preprocessing Tabular Features...
+2026-01-13 11:01:46 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-01-13 11:01:46 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/kfold_indices.pkl...
+2026-01-13 11:01:46 | >>> Starting Deep OOF Feature Extraction...
+2026-01-13 11:01:48 |    Processed OOF Fold 2/10
+2026-01-13 11:01:50 |    Processed OOF Fold 4/10
+2026-01-13 11:01:53 |    Processed OOF Fold 6/10
+2026-01-13 11:01:55 |    Processed OOF Fold 8/10
+2026-01-13 11:01:57 |    Processed OOF Fold 10/10
+2026-01-13 11:01:57 | >>> Extracting Test Deep Features (Ensemble)...
+2026-01-13 11:01:57 | >>> Starting Test Ensemble Feature Extraction...
+2026-01-13 11:02:12 | >>> Fusing Features...
+2026-01-13 11:02:12 | Fused Shape: (9014, 2456)
+2026-01-13 11:02:12 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-01-13 11:02:14 | >>> Running Advanced Feature Selection (Global)...
+2026-01-13 11:08:44 | Feature Selection Complete. New Shape: (9014, 357)
+2026-01-13 11:08:44 | >>> Running GridSearchCV...
+2026-01-13 11:13:57 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 20, 'reg_alpha': 1.0, 'reg_lambda': 1.0, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-01-13 11:13:57 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-01-13 11:14:03 | --- CV Fold 2 ---
+2026-01-13 11:14:03 |    AUC : 0.9064 | AUPR: 0.9140
+2026-01-13 11:14:03 |    ACC : 0.8226 | F1  : 0.8100
+2026-01-13 11:14:03 |    MCC : 0.6510 | Spec: 0.8891 | Sens: 0.7561
+2026-01-13 11:14:11 | --- CV Fold 4 ---
+2026-01-13 11:14:11 |    AUC : 0.8960 | AUPR: 0.9147
+2026-01-13 11:14:11 |    ACC : 0.8282 | F1  : 0.8161
+2026-01-13 11:14:11 |    MCC : 0.6620 | Spec: 0.8936 | Sens: 0.7627
+2026-01-13 11:14:15 | --- CV Fold 6 ---
+2026-01-13 11:14:15 |    AUC : 0.9031 | AUPR: 0.9164
+2026-01-13 11:14:15 |    ACC : 0.8380 | F1  : 0.8326
+2026-01-13 11:14:15 |    MCC : 0.6774 | Spec: 0.8711 | Sens: 0.8049
+2026-01-13 11:14:18 | --- CV Fold 8 ---
+2026-01-13 11:14:18 |    AUC : 0.8956 | AUPR: 0.9144
+2026-01-13 11:14:18 |    ACC : 0.8224 | F1  : 0.8077
+2026-01-13 11:14:18 |    MCC : 0.6523 | Spec: 0.8980 | Sens: 0.7467
+2026-01-13 11:14:27 | --- CV Fold 10 ---
+2026-01-13 11:14:27 |    AUC : 0.9130 | AUPR: 0.9286
+2026-01-13 11:14:27 |    ACC : 0.8491 | F1  : 0.8400
+2026-01-13 11:14:27 |    MCC : 0.7024 | Spec: 0.9047 | Sens: 0.7933
+2026-01-13 11:14:27 | 
+>>> 10-Fold CV Summary: AUC: 0.9047 | ACC: 0.8328
+2026-01-13 11:14:27 | >>> Best Threshold: 0.4841 (OOF F1: 0.8271)
+2026-01-13 11:14:27 | 
+>>> Retraining Final Model on Full Data...
+2026-01-13 11:14:30 | --- Independent Test Results ---
+2026-01-13 11:14:30 |    AUC : 0.9066 | AUPR: 0.9171
+2026-01-13 11:14:30 |    ACC : 0.8315 | F1  : 0.8232
+2026-01-13 11:14:30 |    MCC : 0.6660 | Spec: 0.8784 | Sens: 0.7847
+2026-01-13 11:14:30 | >>> All Finished.
+2026-01-19 09:25:54 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-01-19 09:25:54 | >>> Loading Datasets...
+2026-01-19 09:26:26 | >>> Preprocessing Tabular Features...
+2026-01-19 09:26:31 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-01-19 09:26:31 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/kfold_indices.pkl...
+2026-01-19 09:26:31 | >>> Starting Deep OOF Feature Extraction...
+2026-01-19 09:26:33 |    Processed OOF Fold 2/10
+2026-01-19 09:26:34 |    Processed OOF Fold 4/10
+2026-01-19 09:26:35 |    Processed OOF Fold 6/10
+2026-01-19 09:26:35 |    Processed OOF Fold 8/10
+2026-01-19 09:26:36 |    Processed OOF Fold 10/10
+2026-01-19 09:26:37 | >>> Extracting Test Deep Features (Ensemble)...
+2026-01-19 09:26:37 | >>> Starting Test Ensemble Feature Extraction...
+2026-01-19 09:26:44 | >>> Fusing Features...
+2026-01-19 09:26:46 | Fused Shape: (9014, 2456)
+2026-01-19 09:26:46 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-01-19 09:26:47 | >>> Running Advanced Feature Selection (Global)...
+2026-01-19 09:29:08 | Feature Selection Complete. New Shape: (9014, 357)
+2026-01-19 09:29:08 | >>> Running GridSearchCV...
+2026-01-19 09:42:52 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 20, 'reg_alpha': 1.0, 'reg_lambda': 1.0, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-01-19 09:42:52 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-01-19 09:43:14 | --- CV Fold 2 ---
+2026-01-19 09:43:14 |    AUC : 0.9064 | AUPR: 0.9140
+2026-01-19 09:43:14 |    ACC : 0.8226 | F1  : 0.8100
+2026-01-19 09:43:14 |    MCC : 0.6510 | Spec: 0.8891 | Sens: 0.7561
+2026-01-19 09:44:00 | --- CV Fold 4 ---
+2026-01-19 09:44:00 |    AUC : 0.8960 | AUPR: 0.9147
+2026-01-19 09:44:00 |    ACC : 0.8282 | F1  : 0.8161
+2026-01-19 09:44:00 |    MCC : 0.6620 | Spec: 0.8936 | Sens: 0.7627
+2026-01-19 09:44:17 | --- CV Fold 6 ---
+2026-01-19 09:44:17 |    AUC : 0.9031 | AUPR: 0.9164
+2026-01-19 09:44:17 |    ACC : 0.8380 | F1  : 0.8326
+2026-01-19 09:44:17 |    MCC : 0.6774 | Spec: 0.8711 | Sens: 0.8049
+2026-01-19 09:44:30 | --- CV Fold 8 ---
+2026-01-19 09:44:30 |    AUC : 0.8956 | AUPR: 0.9144
+2026-01-19 09:44:30 |    ACC : 0.8224 | F1  : 0.8077
+2026-01-19 09:44:30 |    MCC : 0.6523 | Spec: 0.8980 | Sens: 0.7467
+2026-01-19 09:44:46 | --- CV Fold 10 ---
+2026-01-19 09:44:46 |    AUC : 0.9130 | AUPR: 0.9286
+2026-01-19 09:44:46 |    ACC : 0.8491 | F1  : 0.8400
+2026-01-19 09:44:46 |    MCC : 0.7024 | Spec: 0.9047 | Sens: 0.7933
+2026-01-19 09:44:46 | 
+>>> 10-Fold CV Summary: AUC: 0.9047 | ACC: 0.8328
+2026-01-19 09:44:46 | >>> Best Threshold: 0.4841 (OOF F1: 0.8271)
+2026-01-19 09:44:46 | 
+>>> Retraining Final Model on Full Data...
+2026-01-19 09:44:59 | --- Independent Test Results ---
+2026-01-19 09:44:59 |    AUC : 0.9066 | AUPR: 0.9171
+2026-01-19 09:44:59 |    ACC : 0.8315 | F1  : 0.8232
+2026-01-19 09:44:59 |    MCC : 0.6660 | Spec: 0.8784 | Sens: 0.7847
+2026-01-19 09:44:59 | >>> All Finished.
+2026-01-22 10:01:06 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-01-22 10:01:06 | >>> Loading Datasets...
+2026-01-22 10:01:24 | >>> Preprocessing Tabular Features...
+2026-01-22 10:01:30 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-01-22 10:01:30 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/kfold_indices.pkl...
+2026-01-22 10:01:30 | >>> Starting Deep OOF Feature Extraction...
+2026-01-22 10:01:31 |    Processed OOF Fold 2/10
+2026-01-22 10:01:33 |    Processed OOF Fold 4/10
+2026-01-22 10:01:34 |    Processed OOF Fold 6/10
+2026-01-22 10:01:35 |    Processed OOF Fold 8/10
+2026-01-22 10:01:36 |    Processed OOF Fold 10/10
+2026-01-22 10:01:36 | >>> Extracting Test Deep Features (Ensemble)...
+2026-01-22 10:01:36 | >>> Starting Test Ensemble Feature Extraction...
+2026-01-22 10:01:45 | >>> Fusing Features...
+2026-01-22 10:01:45 | Fused Shape: (9014, 2456)
+2026-01-22 10:01:45 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-01-22 10:01:46 | >>> Running Advanced Feature Selection (Global)...
+2026-01-22 10:05:59 | Feature Selection Complete. New Shape: (9014, 357)
+2026-01-22 10:05:59 | >>> Running GridSearchCV...
+2026-01-22 10:13:53 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 20, 'reg_alpha': 1.0, 'reg_lambda': 1.0, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-01-22 10:13:53 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-01-22 10:23:59 | --- CV Fold 2 ---
+2026-01-22 10:23:59 |    AUC : 0.9064 | AUPR: 0.9140
+2026-01-22 10:23:59 |    ACC : 0.8226 | F1  : 0.8100
+2026-01-22 10:23:59 |    MCC : 0.6510 | Spec: 0.8891 | Sens: 0.7561
+2026-01-22 10:33:13 | --- CV Fold 4 ---
+2026-01-22 10:33:13 |    AUC : 0.8960 | AUPR: 0.9147
+2026-01-22 10:33:13 |    ACC : 0.8282 | F1  : 0.8161
+2026-01-22 10:33:13 |    MCC : 0.6620 | Spec: 0.8936 | Sens: 0.7627
+2026-01-22 10:36:21 | --- CV Fold 6 ---
+2026-01-22 10:36:21 |    AUC : 0.9031 | AUPR: 0.9164
+2026-01-22 10:36:21 |    ACC : 0.8380 | F1  : 0.8326
+2026-01-22 10:36:21 |    MCC : 0.6774 | Spec: 0.8711 | Sens: 0.8049
+2026-01-22 10:38:18 | --- CV Fold 8 ---
+2026-01-22 10:38:18 |    AUC : 0.8956 | AUPR: 0.9144
+2026-01-22 10:38:18 |    ACC : 0.8224 | F1  : 0.8077
+2026-01-22 10:38:18 |    MCC : 0.6523 | Spec: 0.8980 | Sens: 0.7467
+2026-01-22 10:44:35 | --- CV Fold 10 ---
+2026-01-22 10:44:35 |    AUC : 0.9130 | AUPR: 0.9286
+2026-01-22 10:44:35 |    ACC : 0.8491 | F1  : 0.8400
+2026-01-22 10:44:35 |    MCC : 0.7024 | Spec: 0.9047 | Sens: 0.7933
+2026-01-22 10:44:35 | 
+>>> 10-Fold CV Summary: AUC: 0.9047 | ACC: 0.8328
+2026-01-22 10:44:35 | >>> Best Threshold: 0.4841 (OOF F1: 0.8271)
+2026-01-22 10:44:35 | 
+>>> Retraining Final Model on Full Data...
+2026-01-22 10:47:04 | --- Independent Test Results ---
+2026-01-22 10:47:04 |    AUC : 0.9066 | AUPR: 0.9171
+2026-01-22 10:47:04 |    ACC : 0.8315 | F1  : 0.8232
+2026-01-22 10:47:04 |    MCC : 0.6660 | Spec: 0.8784 | Sens: 0.7847
+2026-01-22 10:47:04 | >>> All Finished.
+2026-01-30 15:54:05 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-01-30 15:54:05 | >>> Loading Datasets...
+2026-01-30 15:54:19 | >>> Preprocessing Tabular Features...
+2026-01-30 15:54:24 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-01-30 15:54:24 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/kfold_indices.pkl...
+2026-01-30 15:54:24 | >>> Starting Deep OOF Feature Extraction...
+2026-01-30 15:54:26 |    Processed OOF Fold 2/10
+2026-01-30 15:54:27 |    Processed OOF Fold 4/10
+2026-01-30 15:54:28 |    Processed OOF Fold 6/10
+2026-01-30 15:54:29 |    Processed OOF Fold 8/10
+2026-01-30 15:54:30 |    Processed OOF Fold 10/10
+2026-01-30 15:54:30 | >>> Extracting Test Deep Features (Ensemble)...
+2026-01-30 15:54:30 | >>> Starting Test Ensemble Feature Extraction...
+2026-01-30 15:54:38 | >>> Fusing Features...
+2026-01-30 15:54:38 | Fused Shape: (9014, 2456)
+2026-01-30 15:54:38 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-01-30 15:54:40 | >>> Running Advanced Feature Selection (Global)...
+2026-01-30 15:56:23 | Feature Selection Complete. New Shape: (9014, 357)
+2026-01-30 15:56:23 | >>> Running GridSearchCV...
+2026-01-30 16:01:31 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 20, 'reg_alpha': 1.0, 'reg_lambda': 1.0, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-01-30 16:01:31 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-01-30 16:01:36 | --- CV Fold 2 ---
+2026-01-30 16:01:36 |    AUC : 0.9064 | AUPR: 0.9140
+2026-01-30 16:01:36 |    ACC : 0.8226 | F1  : 0.8100
+2026-01-30 16:01:36 |    MCC : 0.6510 | Spec: 0.8891 | Sens: 0.7561
+2026-01-30 16:01:43 | --- CV Fold 4 ---
+2026-01-30 16:01:43 |    AUC : 0.8960 | AUPR: 0.9147
+2026-01-30 16:01:43 |    ACC : 0.8282 | F1  : 0.8161
+2026-01-30 16:01:43 |    MCC : 0.6620 | Spec: 0.8936 | Sens: 0.7627
+2026-01-30 16:01:45 | --- CV Fold 6 ---
+2026-01-30 16:01:45 |    AUC : 0.9031 | AUPR: 0.9164
+2026-01-30 16:01:45 |    ACC : 0.8380 | F1  : 0.8326
+2026-01-30 16:01:45 |    MCC : 0.6774 | Spec: 0.8711 | Sens: 0.8049
+2026-01-30 16:01:48 | --- CV Fold 8 ---
+2026-01-30 16:01:48 |    AUC : 0.8956 | AUPR: 0.9144
+2026-01-30 16:01:48 |    ACC : 0.8224 | F1  : 0.8077
+2026-01-30 16:01:48 |    MCC : 0.6523 | Spec: 0.8980 | Sens: 0.7467
+2026-01-30 16:01:51 | --- CV Fold 10 ---
+2026-01-30 16:01:51 |    AUC : 0.9130 | AUPR: 0.9286
+2026-01-30 16:01:51 |    ACC : 0.8491 | F1  : 0.8400
+2026-01-30 16:01:51 |    MCC : 0.7024 | Spec: 0.9047 | Sens: 0.7933
+2026-01-30 16:01:51 | 
+=== 10-Fold CV Summary ===
+2026-01-30 16:01:51 | ACC         : 0.8328 (+/- 0.0126)
+2026-01-30 16:01:51 | MCC         : 0.6698 (+/- 0.0240)
+2026-01-30 16:01:51 | Recall      : 0.7790 (+/- 0.0248)
+2026-01-30 16:01:51 | Precision   : 0.8730 (+/- 0.0108)
+2026-01-30 16:01:51 | Specificity : 0.8866 (+/- 0.0113)
+2026-01-30 16:01:51 | F1          : 0.8231 (+/- 0.0152)
+2026-01-30 16:01:51 | AUC         : 0.9047 (+/- 0.0083)
+2026-01-30 16:01:51 | AUPR        : 0.9188 (+/- 0.0088)
+2026-01-30 16:01:51 | >>> Best Threshold: 0.4841 (OOF F1: 0.8271)
+2026-01-30 16:01:51 | 
+>>> Retraining Final Model on Full Data...
+2026-01-30 16:01:53 | --- Independent Test Results ---
+2026-01-30 16:01:53 |    AUC : 0.9066 | AUPR: 0.9171
+2026-01-30 16:01:53 |    ACC : 0.8315 | F1  : 0.8232
+2026-01-30 16:01:53 |    MCC : 0.6660 | Spec: 0.8784 | Sens: 0.7847
+2026-01-30 16:01:53 | >>> All Finished.
+2026-01-31 14:21:03 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": false,
+  "MIN_FEATURES": 200
+}
+2026-01-31 14:21:03 | >>> Loading Datasets...
+2026-01-31 14:21:09 | >>> Preprocessing Tabular Features...
+2026-01-31 14:21:15 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-01-31 14:21:15 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/kfold_indices.pkl...
+2026-01-31 14:21:15 | >>> Starting Deep OOF Feature Extraction...
+2026-01-31 14:21:16 |    Processed OOF Fold 2/10
+2026-01-31 14:21:17 |    Processed OOF Fold 4/10
+2026-01-31 14:21:17 |    Processed OOF Fold 6/10
+2026-01-31 14:21:18 |    Processed OOF Fold 8/10
+2026-01-31 14:21:19 |    Processed OOF Fold 10/10
+2026-01-31 14:21:19 | >>> Extracting Test Deep Features (Ensemble)...
+2026-01-31 14:21:19 | >>> Starting Test Ensemble Feature Extraction...
+2026-01-31 14:21:28 | >>> Fusing Features...
+2026-01-31 14:21:28 | Fused Shape: (9014, 2456)
+2026-01-31 14:21:28 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-01-31 14:21:29 | >>> Skipping Feature Selection.
+2026-01-31 14:21:29 | >>> Running GridSearchCV...
+2026-01-31 14:46:03 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 20, 'reg_alpha': 1.0, 'reg_lambda': 0.1, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-01-31 14:46:03 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-01-31 14:46:08 | --- CV Fold 2 ---
+2026-01-31 14:46:08 |    AUC : 0.9039 | AUPR: 0.9144
+2026-01-31 14:46:08 |    ACC : 0.8215 | F1  : 0.8067
+2026-01-31 14:46:08 |    MCC : 0.6507 | Spec: 0.8980 | Sens: 0.7450
+2026-01-31 14:46:17 | --- CV Fold 4 ---
+2026-01-31 14:46:17 |    AUC : 0.8930 | AUPR: 0.9117
+2026-01-31 14:46:17 |    ACC : 0.8259 | F1  : 0.8129
+2026-01-31 14:46:17 |    MCC : 0.6583 | Spec: 0.8958 | Sens: 0.7561
+2026-01-31 14:46:27 | --- CV Fold 6 ---
+2026-01-31 14:46:27 |    AUC : 0.9040 | AUPR: 0.9168
+2026-01-31 14:46:27 |    ACC : 0.8335 | F1  : 0.8272
+2026-01-31 14:46:27 |    MCC : 0.6690 | Spec: 0.8711 | Sens: 0.7960
+2026-01-31 14:46:32 | --- CV Fold 8 ---
+2026-01-31 14:46:32 |    AUC : 0.9016 | AUPR: 0.9189
+2026-01-31 14:46:32 |    ACC : 0.8224 | F1  : 0.8077
+2026-01-31 14:46:32 |    MCC : 0.6523 | Spec: 0.8980 | Sens: 0.7467
+2026-01-31 14:46:40 | --- CV Fold 10 ---
+2026-01-31 14:46:40 |    AUC : 0.9134 | AUPR: 0.9288
+2026-01-31 14:46:40 |    ACC : 0.8502 | F1  : 0.8421
+2026-01-31 14:46:40 |    MCC : 0.7038 | Spec: 0.9002 | Sens: 0.8000
+2026-01-31 14:46:40 | 
+=== 10-Fold CV Summary ===
+2026-01-31 14:46:40 | ACC         : 0.8326 (+/- 0.0137)
+2026-01-31 14:46:40 | MCC         : 0.6698 (+/- 0.0264)
+2026-01-31 14:46:40 | Recall      : 0.7750 (+/- 0.0230)
+2026-01-31 14:46:40 | Precision   : 0.8759 (+/- 0.0123)
+2026-01-31 14:46:40 | Specificity : 0.8902 (+/- 0.0118)
+2026-01-31 14:46:40 | F1          : 0.8222 (+/- 0.0159)
+2026-01-31 14:46:40 | AUC         : 0.9044 (+/- 0.0074)
+2026-01-31 14:46:40 | AUPR        : 0.9187 (+/- 0.0071)
+2026-01-31 14:46:40 | >>> Best Threshold: 0.4817 (OOF F1: 0.8245)
+2026-01-31 14:46:40 | 
+>>> Retraining Final Model on Full Data...
+2026-01-31 14:46:43 | --- Independent Test Results ---
+2026-01-31 14:46:43 |    AUC : 0.9035 | AUPR: 0.9167
+2026-01-31 14:46:43 |    ACC : 0.8336 | F1  : 0.8253
+2026-01-31 14:46:43 |    MCC : 0.6702 | Spec: 0.8810 | Sens: 0.7862
+2026-01-31 14:46:43 | >>> All Finished.
+2026-01-31 22:22:26 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-01-31 22:22:26 | >>> Loading Datasets...
+2026-01-31 22:22:30 | >>> Preprocessing Tabular Features...
+2026-01-31 22:22:37 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-01-31 22:22:37 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5/kfold_indices.pkl...
+2026-01-31 22:22:37 | >>> Starting Deep OOF Feature Extraction...
+2026-01-31 22:22:39 |    Processed OOF Fold 2/10
+2026-01-31 22:22:41 |    Processed OOF Fold 4/10
+2026-01-31 22:22:42 |    Processed OOF Fold 6/10
+2026-01-31 22:22:43 |    Processed OOF Fold 8/10
+2026-01-31 22:22:45 |    Processed OOF Fold 10/10
+2026-01-31 22:22:45 | >>> Extracting Test Deep Features (Ensemble)...
+2026-01-31 22:22:45 | >>> Starting Test Ensemble Feature Extraction...
+2026-01-31 22:22:59 | >>> Fusing Features...
+2026-01-31 22:22:59 | Fused Shape: (9014, 2456)
+2026-01-31 22:22:59 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-01-31 22:23:00 | >>> Running Advanced Feature Selection (Global)...
+2026-01-31 22:26:48 | Feature Selection Complete. New Shape: (9014, 236)
+2026-01-31 22:26:48 | >>> Running GridSearchCV...
+2026-01-31 22:35:51 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 20, 'reg_alpha': 0.1, 'reg_lambda': 0.1, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-01-31 22:35:51 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-01-31 22:36:06 | --- CV Fold 2 ---
+2026-01-31 22:36:06 |    AUC : 0.9013 | AUPR: 0.9108
+2026-01-31 22:36:06 |    ACC : 0.8259 | F1  : 0.8164
+2026-01-31 22:36:06 |    MCC : 0.6555 | Spec: 0.8780 | Sens: 0.7738
+2026-01-31 22:36:51 | --- CV Fold 4 ---
+2026-01-31 22:36:51 |    AUC : 0.8983 | AUPR: 0.9151
+2026-01-31 22:36:51 |    ACC : 0.8259 | F1  : 0.8142
+2026-01-31 22:36:51 |    MCC : 0.6572 | Spec: 0.8891 | Sens: 0.7627
+2026-01-31 22:37:11 | --- CV Fold 6 ---
+2026-01-31 22:37:11 |    AUC : 0.9045 | AUPR: 0.9181
+2026-01-31 22:37:11 |    ACC : 0.8357 | F1  : 0.8275
+2026-01-31 22:37:11 |    MCC : 0.6747 | Spec: 0.8844 | Sens: 0.7871
+2026-01-31 22:37:23 | --- CV Fold 8 ---
+2026-01-31 22:37:23 |    AUC : 0.8947 | AUPR: 0.9150
+2026-01-31 22:37:23 |    ACC : 0.8246 | F1  : 0.8119
+2026-01-31 22:37:23 |    MCC : 0.6551 | Spec: 0.8914 | Sens: 0.7578
+2026-01-31 22:37:36 | --- CV Fold 10 ---
+2026-01-31 22:37:36 |    AUC : 0.9147 | AUPR: 0.9293
+2026-01-31 22:37:36 |    ACC : 0.8479 | F1  : 0.8383
+2026-01-31 22:37:36 |    MCC : 0.7007 | Spec: 0.9069 | Sens: 0.7889
+2026-01-31 22:37:36 | 
+=== 10-Fold CV Summary ===
+2026-01-31 22:37:36 | ACC         : 0.8309 (+/- 0.0115)
+2026-01-31 22:37:36 | MCC         : 0.6658 (+/- 0.0225)
+2026-01-31 22:37:36 | Recall      : 0.7770 (+/- 0.0175)
+2026-01-31 22:37:36 | Precision   : 0.8710 (+/- 0.0113)
+2026-01-31 22:37:36 | Specificity : 0.8848 (+/- 0.0108)
+2026-01-31 22:37:36 | F1          : 0.8212 (+/- 0.0129)
+2026-01-31 22:37:36 | AUC         : 0.9045 (+/- 0.0080)
+2026-01-31 22:37:36 | AUPR        : 0.9183 (+/- 0.0079)
+2026-01-31 22:37:36 | >>> Best Threshold: 0.4977 (OOF F1: 0.8265)
+2026-01-31 22:37:36 | 
+>>> Retraining Final Model on Full Data...
+2026-01-31 22:37:37 | --- Independent Test Results ---
+2026-01-31 22:37:37 |    AUC : 0.8994 | AUPR: 0.9112
+2026-01-31 22:37:37 |    ACC : 0.8269 | F1  : 0.8128
+2026-01-31 22:37:37 |    MCC : 0.6613 | Spec: 0.9022 | Sens: 0.7516
+2026-01-31 22:37:37 | >>> All Finished.
+2026-02-01 15:36:39 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-02-01 15:36:39 | >>> Loading Datasets...
+2026-02-01 15:36:45 | >>> Preprocessing Tabular Features...
+2026-02-01 15:36:50 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-02-01 15:36:50 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/kfold_indices.pkl...
+2026-02-01 15:36:50 | >>> Starting Deep OOF Feature Extraction...
+2026-02-01 15:36:51 |    Processed OOF Fold 2/10
+2026-02-01 15:36:53 |    Processed OOF Fold 4/10
+2026-02-01 15:36:54 |    Processed OOF Fold 6/10
+2026-02-01 15:36:56 |    Processed OOF Fold 8/10
+2026-02-01 15:36:57 |    Processed OOF Fold 10/10
+2026-02-01 15:36:57 | >>> Extracting Test Deep Features (Ensemble)...
+2026-02-01 15:36:57 | >>> Starting Test Ensemble Feature Extraction...
+2026-02-01 15:37:08 | >>> Fusing Features...
+2026-02-01 15:37:08 | Fused Shape: (9014, 2456)
+2026-02-01 15:37:08 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-02-01 15:37:09 | >>> Running Advanced Feature Selection (Global)...
+2026-02-01 15:39:53 | Feature Selection Complete. New Shape: (9014, 297)
+2026-02-01 15:39:53 | >>> Running GridSearchCV...
+2026-02-01 15:44:49 | Best Params: {'colsample_bytree': 0.6, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 15, 'reg_alpha': 0.1, 'reg_lambda': 1.0, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-02-01 15:44:49 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-02-01 15:44:57 | --- CV Fold 2 ---
+2026-02-01 15:44:57 |    AUC : 0.9042 | AUPR: 0.9132
+2026-02-01 15:44:57 |    ACC : 0.8248 | F1  : 0.8115
+2026-02-01 15:44:57 |    MCC : 0.6563 | Spec: 0.8958 | Sens: 0.7539
+2026-02-01 15:45:12 | --- CV Fold 4 ---
+2026-02-01 15:45:12 |    AUC : 0.9027 | AUPR: 0.9186
+2026-02-01 15:45:12 |    ACC : 0.8392 | F1  : 0.8304
+2026-02-01 15:45:12 |    MCC : 0.6822 | Spec: 0.8914 | Sens: 0.7871
+2026-02-01 15:45:47 | --- CV Fold 6 ---
+2026-02-01 15:45:47 |    AUC : 0.9063 | AUPR: 0.9191
+2026-02-01 15:45:47 |    ACC : 0.8424 | F1  : 0.8360
+2026-02-01 15:45:47 |    MCC : 0.6870 | Spec: 0.8822 | Sens: 0.8027
+2026-02-01 15:45:54 | --- CV Fold 8 ---
+2026-02-01 15:45:54 |    AUC : 0.9018 | AUPR: 0.9182
+2026-02-01 15:45:54 |    ACC : 0.8224 | F1  : 0.8095
+2026-02-01 15:45:54 |    MCC : 0.6506 | Spec: 0.8891 | Sens: 0.7556
+2026-02-01 15:46:02 | --- CV Fold 10 ---
+2026-02-01 15:46:02 |    AUC : 0.9135 | AUPR: 0.9296
+2026-02-01 15:46:02 |    ACC : 0.8491 | F1  : 0.8404
+2026-02-01 15:46:02 |    MCC : 0.7021 | Spec: 0.9024 | Sens: 0.7956
+2026-02-01 15:46:02 | 
+=== 10-Fold CV Summary ===
+2026-02-01 15:46:02 | ACC         : 0.8336 (+/- 0.0132)
+2026-02-01 15:46:02 | MCC         : 0.6714 (+/- 0.0257)
+2026-02-01 15:46:02 | Recall      : 0.7781 (+/- 0.0206)
+2026-02-01 15:46:02 | Precision   : 0.8752 (+/- 0.0115)
+2026-02-01 15:46:02 | Specificity : 0.8891 (+/- 0.0106)
+2026-02-01 15:46:02 | F1          : 0.8237 (+/- 0.0151)
+2026-02-01 15:46:02 | AUC         : 0.9057 (+/- 0.0067)
+2026-02-01 15:46:02 | AUPR        : 0.9193 (+/- 0.0073)
+2026-02-01 15:46:02 | >>> Best Threshold: 0.4493 (OOF F1: 0.8274)
+2026-02-01 15:46:02 | 
+>>> Retraining Final Model on Full Data...
+2026-02-01 15:46:09 | --- Independent Test Results ---
+2026-02-01 15:46:09 |    AUC : 0.9068 | AUPR: 0.9160
+2026-02-01 15:46:09 |    ACC : 0.8346 | F1  : 0.8287
+2026-02-01 15:46:09 |    MCC : 0.6708 | Spec: 0.8690 | Sens: 0.8002
+2026-02-01 15:46:09 | >>> All Finished.
+2026-03-11 09:40:00 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-03-11 09:40:00 | >>> Loading Datasets...
+2026-03-11 09:40:05 | >>> Preprocessing Tabular Features...
+2026-03-11 09:40:09 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-03-11 09:40:09 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/kfold_indices.pkl...
+2026-03-11 09:40:09 | >>> Starting Deep OOF Feature Extraction...
+2026-03-11 09:44:30 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-03-11 09:44:30 | >>> Loading Datasets...
+2026-03-11 09:44:32 | >>> Preprocessing Tabular Features...
+2026-03-11 09:44:37 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-03-11 09:44:37 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/kfold_indices.pkl...
+2026-03-11 09:44:37 | >>> Starting Deep OOF Feature Extraction...
+2026-03-11 09:49:06 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-03-11 09:49:06 | >>> Loading Datasets...
+2026-03-11 09:49:08 | >>> Preprocessing Tabular Features...
+2026-03-11 09:49:13 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-03-11 09:49:13 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/kfold_indices.pkl...
+2026-03-11 09:49:13 | >>> Starting Deep OOF Feature Extraction...
+2026-03-11 09:57:11 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-03-11 09:57:11 | >>> Loading Datasets...
+2026-03-11 09:57:33 | >>> Preprocessing Tabular Features...
+2026-03-11 09:57:37 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-03-11 09:57:37 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/kfold_indices.pkl...
+2026-03-11 09:57:37 | >>> Starting Deep OOF Feature Extraction...
+2026-03-11 09:57:38 |    Processed OOF Fold 2/10
+2026-03-11 09:57:39 |    Processed OOF Fold 4/10
+2026-03-11 09:57:40 |    Processed OOF Fold 6/10
+2026-03-11 09:57:41 |    Processed OOF Fold 8/10
+2026-03-11 09:57:42 |    Processed OOF Fold 10/10
+2026-03-11 09:57:42 | >>> Extracting Test Deep Features (Ensemble)...
+2026-03-11 09:57:42 | >>> Starting Test Ensemble Feature Extraction...
+2026-03-11 09:57:49 | >>> Fusing Features...
+2026-03-11 09:57:49 | Fused Shape: (9014, 2456)
+2026-03-11 09:57:49 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-03-11 09:57:49 | >>> Running Advanced Feature Selection (Global)...
+2026-03-11 09:59:17 | Feature Selection Complete. New Shape: (9014, 356)
+2026-03-11 09:59:17 | >>> Running GridSearchCV...
+2026-03-11 10:04:15 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-03-11 10:04:15 | >>> Loading Datasets...
+2026-03-11 10:04:15 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 15, 'reg_alpha': 1.0, 'reg_lambda': 0.1, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-03-11 10:04:15 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-03-11 10:04:17 | --- CV Fold 2 ---
+2026-03-11 10:04:17 |    AUC : 0.9075 | AUPR: 0.9154
+2026-03-11 10:04:17 |    ACC : 0.8271 | F1  : 0.8138
+2026-03-11 10:04:17 |    MCC : 0.6608 | Spec: 0.8980 | Sens: 0.7561
+2026-03-11 10:04:20 | --- CV Fold 4 ---
+2026-03-11 10:04:20 |    AUC : 0.8988 | AUPR: 0.9160
+2026-03-11 10:04:20 |    ACC : 0.8282 | F1  : 0.8174
+2026-03-11 10:04:20 |    MCC : 0.6609 | Spec: 0.8869 | Sens: 0.7694
+2026-03-11 10:04:21 | >>> Preprocessing Tabular Features...
+2026-03-11 10:04:24 | --- CV Fold 6 ---
+2026-03-11 10:04:24 |    AUC : 0.9047 | AUPR: 0.9190
+2026-03-11 10:04:24 |    ACC : 0.8424 | F1  : 0.8386
+2026-03-11 10:04:24 |    MCC : 0.6856 | Spec: 0.8667 | Sens: 0.8182
+2026-03-11 10:04:28 | --- CV Fold 8 ---
+2026-03-11 10:04:28 |    AUC : 0.9010 | AUPR: 0.9185
+2026-03-11 10:04:28 |    ACC : 0.8313 | F1  : 0.8199
+2026-03-11 10:04:28 |    MCC : 0.6677 | Spec: 0.8936 | Sens: 0.7689
+2026-03-11 10:04:28 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-03-11 10:04:28 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/kfold_indices.pkl...
+2026-03-11 10:04:28 | >>> Starting Deep OOF Feature Extraction...
+2026-03-11 10:04:29 |    Processed OOF Fold 2/10
+2026-03-11 10:04:30 | --- CV Fold 10 ---
+2026-03-11 10:04:30 |    AUC : 0.9119 | AUPR: 0.9286
+2026-03-11 10:04:30 |    ACC : 0.8391 | F1  : 0.8292
+2026-03-11 10:04:30 |    MCC : 0.6825 | Spec: 0.8958 | Sens: 0.7822
+2026-03-11 10:04:30 | 
+=== 10-Fold CV Summary ===
+2026-03-11 10:04:30 | ACC         : 0.8328 (+/- 0.0111)
+2026-03-11 10:04:30 | MCC         : 0.6703 (+/- 0.0216)
+2026-03-11 10:04:30 | Recall      : 0.7752 (+/- 0.0202)
+2026-03-11 10:04:30 | Precision   : 0.8763 (+/- 0.0126)
+2026-03-11 10:04:30 | Specificity : 0.8904 (+/- 0.0131)
+2026-03-11 10:04:30 | F1          : 0.8225 (+/- 0.0128)
+2026-03-11 10:04:30 | AUC         : 0.9046 (+/- 0.0062)
+2026-03-11 10:04:30 | AUPR        : 0.9191 (+/- 0.0067)
+2026-03-11 10:04:30 | >>> Best Threshold: 0.4981 (OOF F1: 0.8235)
+2026-03-11 10:04:30 | 
+>>> Retraining Final Model on Full Data...
+2026-03-11 10:04:31 |    Processed OOF Fold 4/10
+2026-03-11 10:04:31 | --- Independent Test Results ---
+2026-03-11 10:04:31 |    AUC : 0.9023 | AUPR: 0.9137
+2026-03-11 10:04:31 |    ACC : 0.8339 | F1  : 0.8252
+2026-03-11 10:04:31 |    MCC : 0.6710 | Spec: 0.8835 | Sens: 0.7842
+2026-03-11 10:04:31 | >>> All Finished.
+2026-03-11 10:04:32 |    Processed OOF Fold 6/10
+2026-03-11 10:04:32 |    Processed OOF Fold 8/10
+2026-03-11 10:04:33 |    Processed OOF Fold 10/10
+2026-03-11 10:04:33 | >>> Extracting Test Deep Features (Ensemble)...
+2026-03-11 10:04:33 | >>> Starting Test Ensemble Feature Extraction...
+2026-03-11 10:04:40 | >>> Fusing Features...
+2026-03-11 10:04:41 | Fused Shape: (9014, 2456)
+2026-03-11 10:04:41 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-03-11 10:04:41 | >>> Running Advanced Feature Selection (Global)...
+2026-03-11 10:06:10 | Feature Selection Complete. New Shape: (9014, 356)
+2026-03-11 10:06:10 | >>> Running GridSearchCV...
+2026-03-11 10:07:22 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-03-11 10:07:22 | >>> Loading Datasets...
+2026-03-11 10:07:25 | >>> Preprocessing Tabular Features...
+2026-03-11 10:07:30 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-03-11 10:07:30 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/kfold_indices.pkl...
+2026-03-11 10:07:30 | >>> Starting Deep OOF Feature Extraction...
+2026-03-11 10:07:31 |    Processed OOF Fold 2/10
+2026-03-11 10:07:32 |    Processed OOF Fold 4/10
+2026-03-11 10:07:33 |    Processed OOF Fold 6/10
+2026-03-11 10:07:34 |    Processed OOF Fold 8/10
+2026-03-11 10:07:35 |    Processed OOF Fold 10/10
+2026-03-11 10:07:35 | >>> Extracting Test Deep Features (Ensemble)...
+2026-03-11 10:07:35 | >>> Starting Test Ensemble Feature Extraction...
+2026-03-11 10:07:43 | >>> Fusing Features...
+2026-03-11 10:07:43 | Fused Shape: (9014, 2456)
+2026-03-11 10:07:43 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-03-11 10:07:43 | >>> Running Advanced Feature Selection (Global)...
+2026-03-11 10:09:59 | Feature Selection Complete. New Shape: (9014, 316)
+2026-03-11 10:09:59 | >>> Running GridSearchCV...
+2026-03-11 10:13:40 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 15, 'reg_alpha': 1.0, 'reg_lambda': 0.1, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-03-11 10:13:40 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-03-11 10:13:54 | --- CV Fold 2 ---
+2026-03-11 10:13:54 |    AUC : 0.9075 | AUPR: 0.9154
+2026-03-11 10:13:54 |    ACC : 0.8271 | F1  : 0.8138
+2026-03-11 10:13:54 |    MCC : 0.6608 | Spec: 0.8980 | Sens: 0.7561
+2026-03-11 10:14:15 | --- CV Fold 4 ---
+2026-03-11 10:14:15 |    AUC : 0.8988 | AUPR: 0.9160
+2026-03-11 10:14:15 |    ACC : 0.8282 | F1  : 0.8174
+2026-03-11 10:14:15 |    MCC : 0.6609 | Spec: 0.8869 | Sens: 0.7694
+2026-03-11 10:14:40 | --- CV Fold 6 ---
+2026-03-11 10:14:40 |    AUC : 0.9047 | AUPR: 0.9190
+2026-03-11 10:14:40 |    ACC : 0.8424 | F1  : 0.8386
+2026-03-11 10:14:40 |    MCC : 0.6856 | Spec: 0.8667 | Sens: 0.8182
+2026-03-11 10:15:08 | --- CV Fold 8 ---
+2026-03-11 10:15:08 |    AUC : 0.9010 | AUPR: 0.9185
+2026-03-11 10:15:08 |    ACC : 0.8313 | F1  : 0.8199
+2026-03-11 10:15:08 |    MCC : 0.6677 | Spec: 0.8936 | Sens: 0.7689
+2026-03-11 10:15:20 | --- CV Fold 10 ---
+2026-03-11 10:15:20 |    AUC : 0.9119 | AUPR: 0.9286
+2026-03-11 10:15:20 |    ACC : 0.8391 | F1  : 0.8292
+2026-03-11 10:15:20 |    MCC : 0.6825 | Spec: 0.8958 | Sens: 0.7822
+2026-03-11 10:15:20 | 
+=== 10-Fold CV Summary ===
+2026-03-11 10:15:20 | ACC         : 0.8328 (+/- 0.0111)
+2026-03-11 10:15:20 | MCC         : 0.6703 (+/- 0.0216)
+2026-03-11 10:15:20 | Recall      : 0.7752 (+/- 0.0202)
+2026-03-11 10:15:20 | Precision   : 0.8763 (+/- 0.0126)
+2026-03-11 10:15:20 | Specificity : 0.8904 (+/- 0.0131)
+2026-03-11 10:15:20 | F1          : 0.8225 (+/- 0.0128)
+2026-03-11 10:15:20 | AUC         : 0.9046 (+/- 0.0062)
+2026-03-11 10:15:20 | AUPR        : 0.9191 (+/- 0.0067)
+2026-03-11 10:15:20 | >>> Best Threshold: 0.4981 (OOF F1: 0.8235)
+2026-03-11 10:15:20 | 
+>>> Retraining Final Model on Full Data...
+2026-03-11 10:15:23 | --- Independent Test Results ---
+2026-03-11 10:15:23 |    AUC : 0.9023 | AUPR: 0.9137
+2026-03-11 10:15:23 |    ACC : 0.8339 | F1  : 0.8252
+2026-03-11 10:15:23 |    MCC : 0.6710 | Spec: 0.8835 | Sens: 0.7842
+2026-03-11 10:15:23 | >>> All Finished.
+2026-03-11 10:16:26 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 5, 'num_leaves': 20, 'reg_alpha': 1.0, 'reg_lambda': 0.1, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-03-11 10:16:26 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-03-11 10:16:28 | --- CV Fold 2 ---
+2026-03-11 10:16:28 |    AUC : 0.9059 | AUPR: 0.9122
+2026-03-11 10:16:28 |    ACC : 0.8226 | F1  : 0.8082
+2026-03-11 10:16:28 |    MCC : 0.6527 | Spec: 0.8980 | Sens: 0.7472
+2026-03-11 10:16:30 | --- CV Fold 4 ---
+2026-03-11 10:16:30 |    AUC : 0.8958 | AUPR: 0.9161
+2026-03-11 10:16:30 |    ACC : 0.8248 | F1  : 0.8092
+2026-03-11 10:16:30 |    MCC : 0.6586 | Spec: 0.9069 | Sens: 0.7428
+2026-03-11 10:16:33 | --- CV Fold 6 ---
+2026-03-11 10:16:33 |    AUC : 0.9078 | AUPR: 0.9191
+2026-03-11 10:16:33 |    ACC : 0.8424 | F1  : 0.8349
+2026-03-11 10:16:33 |    MCC : 0.6878 | Spec: 0.8889 | Sens: 0.7960
+2026-03-11 10:16:36 | --- CV Fold 8 ---
+2026-03-11 10:16:36 |    AUC : 0.9047 | AUPR: 0.9222
+2026-03-11 10:16:36 |    ACC : 0.8291 | F1  : 0.8175
+2026-03-11 10:16:36 |    MCC : 0.6633 | Spec: 0.8914 | Sens: 0.7667
+2026-03-11 10:16:38 | --- CV Fold 10 ---
+2026-03-11 10:16:38 |    AUC : 0.9132 | AUPR: 0.9294
+2026-03-11 10:16:38 |    ACC : 0.8435 | F1  : 0.8339
+2026-03-11 10:16:38 |    MCC : 0.6914 | Spec: 0.9002 | Sens: 0.7867
+2026-03-11 10:16:38 | 
+=== 10-Fold CV Summary ===
+2026-03-11 10:16:38 | ACC         : 0.8317 (+/- 0.0108)
+2026-03-11 10:16:38 | MCC         : 0.6680 (+/- 0.0204)
+2026-03-11 10:16:38 | Recall      : 0.7755 (+/- 0.0243)
+2026-03-11 10:16:38 | Precision   : 0.8740 (+/- 0.0117)
+2026-03-11 10:16:38 | Specificity : 0.8880 (+/- 0.0133)
+2026-03-11 10:16:38 | F1          : 0.8215 (+/- 0.0135)
+2026-03-11 10:16:38 | AUC         : 0.9059 (+/- 0.0078)
+2026-03-11 10:16:38 | AUPR        : 0.9199 (+/- 0.0082)
+2026-03-11 10:16:38 | >>> Best Threshold: 0.4908 (OOF F1: 0.8245)
+2026-03-11 10:16:38 | 
+>>> Retraining Final Model on Full Data...
+2026-03-11 10:16:40 | --- Independent Test Results ---
+2026-03-11 10:16:40 |    AUC : 0.9065 | AUPR: 0.9155
+2026-03-11 10:16:40 |    ACC : 0.8313 | F1  : 0.8284
+2026-03-11 10:16:40 |    MCC : 0.6629 | Spec: 0.8478 | Sens: 0.8147
+2026-03-11 10:16:40 | >>> All Finished.
+2026-03-11 10:51:31 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-03-11 10:51:31 | >>> Loading Datasets...
+2026-03-11 10:51:33 | >>> Preprocessing Tabular Features...
+2026-03-11 10:51:38 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-03-11 10:51:38 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/kfold_indices.pkl...
+2026-03-11 10:51:38 | >>> Starting Deep OOF Feature Extraction...
+2026-03-11 10:51:39 |    Processed OOF Fold 2/10
+2026-03-11 10:51:40 |    Processed OOF Fold 4/10
+2026-03-11 10:51:40 |    Processed OOF Fold 6/10
+2026-03-11 10:51:41 |    Processed OOF Fold 8/10
+2026-03-11 10:51:42 |    Processed OOF Fold 10/10
+2026-03-11 10:51:42 | >>> Extracting Test Deep Features (Ensemble)...
+2026-03-11 10:51:42 | >>> Starting Test Ensemble Feature Extraction...
+2026-03-11 10:51:49 | >>> Fusing Features...
+2026-03-11 10:51:49 | Fused Shape: (9014, 2456)
+2026-03-11 10:51:49 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-03-11 10:51:50 | >>> Running Advanced Feature Selection (Global)...
+2026-03-11 10:53:17 | Feature Selection Complete. New Shape: (9014, 356)
+2026-03-11 10:53:17 | >>> Running GridSearchCV...
+2026-03-11 10:58:18 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 15, 'reg_alpha': 1.0, 'reg_lambda': 0.1, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-03-11 10:58:18 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-03-11 10:58:19 | --- CV Fold 2 ---
+2026-03-11 10:58:19 |    AUC : 0.9075 | AUPR: 0.9154
+2026-03-11 10:58:19 |    ACC : 0.8271 | F1  : 0.8138
+2026-03-11 10:58:19 |    MCC : 0.6608 | Spec: 0.8980 | Sens: 0.7561
+2026-03-11 10:58:21 | --- CV Fold 4 ---
+2026-03-11 10:58:21 |    AUC : 0.8988 | AUPR: 0.9160
+2026-03-11 10:58:21 |    ACC : 0.8282 | F1  : 0.8174
+2026-03-11 10:58:21 |    MCC : 0.6609 | Spec: 0.8869 | Sens: 0.7694
+2026-03-11 10:58:23 | --- CV Fold 6 ---
+2026-03-11 10:58:23 |    AUC : 0.9047 | AUPR: 0.9190
+2026-03-11 10:58:23 |    ACC : 0.8424 | F1  : 0.8386
+2026-03-11 10:58:23 |    MCC : 0.6856 | Spec: 0.8667 | Sens: 0.8182
+2026-03-11 10:58:25 | --- CV Fold 8 ---
+2026-03-11 10:58:25 |    AUC : 0.9010 | AUPR: 0.9185
+2026-03-11 10:58:25 |    ACC : 0.8313 | F1  : 0.8199
+2026-03-11 10:58:25 |    MCC : 0.6677 | Spec: 0.8936 | Sens: 0.7689
+2026-03-11 10:58:26 | --- CV Fold 10 ---
+2026-03-11 10:58:26 |    AUC : 0.9119 | AUPR: 0.9286
+2026-03-11 10:58:26 |    ACC : 0.8391 | F1  : 0.8292
+2026-03-11 10:58:26 |    MCC : 0.6825 | Spec: 0.8958 | Sens: 0.7822
+2026-03-11 10:58:26 | 
+=== 10-Fold CV Summary ===
+2026-03-11 10:58:26 | ACC         : 0.8328 (+/- 0.0111)
+2026-03-11 10:58:26 | MCC         : 0.6703 (+/- 0.0216)
+2026-03-11 10:58:26 | Recall      : 0.7752 (+/- 0.0202)
+2026-03-11 10:58:26 | Precision   : 0.8763 (+/- 0.0126)
+2026-03-11 10:58:26 | Specificity : 0.8904 (+/- 0.0131)
+2026-03-11 10:58:26 | F1          : 0.8225 (+/- 0.0128)
+2026-03-11 10:58:26 | AUC         : 0.9046 (+/- 0.0062)
+2026-03-11 10:58:26 | AUPR        : 0.9191 (+/- 0.0067)
+2026-03-11 10:58:26 | >>> Best Threshold: 0.4981 (OOF F1: 0.8235)
+2026-03-11 10:58:26 | 
+>>> Retraining Final Model on Full Data...
+2026-03-11 10:58:26 | --- Independent Test Results ---
+2026-03-11 10:58:26 |    AUC : 0.9023 | AUPR: 0.9137
+2026-03-11 10:58:26 |    ACC : 0.8339 | F1  : 0.8252
+2026-03-11 10:58:26 |    MCC : 0.6710 | Spec: 0.8835 | Sens: 0.7842
+2026-03-11 10:58:26 | >>> All Finished.
+2026-03-11 11:10:36 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-03-11 11:10:36 | >>> Loading Datasets...
+2026-03-11 11:10:39 | >>> Preprocessing Tabular Features...
+2026-03-11 11:10:43 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-03-11 11:10:43 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/kfold_indices.pkl...
+2026-03-11 11:10:43 | >>> Starting Deep OOF Feature Extraction...
+2026-03-11 11:10:44 |    Processed OOF Fold 2/10
+2026-03-11 11:10:45 |    Processed OOF Fold 4/10
+2026-03-11 11:10:46 |    Processed OOF Fold 6/10
+2026-03-11 11:10:47 |    Processed OOF Fold 8/10
+2026-03-11 11:10:47 |    Processed OOF Fold 10/10
+2026-03-11 11:10:47 | >>> Extracting Test Deep Features (Ensemble)...
+2026-03-11 11:10:47 | >>> Starting Test Ensemble Feature Extraction...
+2026-03-11 11:10:54 | >>> Fusing Features...
+2026-03-11 11:10:54 | Fused Shape: (9014, 2456)
+2026-03-11 11:10:54 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-03-11 11:10:55 | >>> Running Advanced Feature Selection (Global)...
+2026-03-11 11:17:25 | Feature Selection Complete. New Shape: (9014, 326)
+2026-03-11 11:17:25 | >>> Running GridSearchCV...
+2026-03-11 11:22:20 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 20, 'reg_alpha': 1.0, 'reg_lambda': 0.1, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-03-11 11:22:20 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-03-11 11:22:22 | --- CV Fold 2 ---
+2026-03-11 11:22:22 |    AUC : 0.9058 | AUPR: 0.9152
+2026-03-11 11:22:22 |    ACC : 0.8271 | F1  : 0.8125
+2026-03-11 11:22:22 |    MCC : 0.6621 | Spec: 0.9047 | Sens: 0.7494
+2026-03-11 11:22:25 | --- CV Fold 4 ---
+2026-03-11 11:22:25 |    AUC : 0.8974 | AUPR: 0.9129
+2026-03-11 11:22:25 |    ACC : 0.8259 | F1  : 0.8092
+2026-03-11 11:22:25 |    MCC : 0.6621 | Spec: 0.9135 | Sens: 0.7384
+2026-03-11 11:22:33 | --- CV Fold 6 ---
+2026-03-11 11:22:33 |    AUC : 0.9065 | AUPR: 0.9207
+2026-03-11 11:22:33 |    ACC : 0.8391 | F1  : 0.8347
+2026-03-11 11:22:33 |    MCC : 0.6792 | Spec: 0.8667 | Sens: 0.8115
+2026-03-11 11:22:37 | --- CV Fold 8 ---
+2026-03-11 11:22:37 |    AUC : 0.8971 | AUPR: 0.9166
+2026-03-11 11:22:37 |    ACC : 0.8313 | F1  : 0.8199
+2026-03-11 11:22:37 |    MCC : 0.6677 | Spec: 0.8936 | Sens: 0.7689
+2026-03-11 11:22:39 | --- CV Fold 10 ---
+2026-03-11 11:22:39 |    AUC : 0.9128 | AUPR: 0.9289
+2026-03-11 11:22:39 |    ACC : 0.8491 | F1  : 0.8400
+2026-03-11 11:22:39 |    MCC : 0.7024 | Spec: 0.9047 | Sens: 0.7933
+2026-03-11 11:22:39 | 
+=== 10-Fold CV Summary ===
+2026-03-11 11:22:39 | ACC         : 0.8334 (+/- 0.0121)
+2026-03-11 11:22:39 | MCC         : 0.6719 (+/- 0.0230)
+2026-03-11 11:22:39 | Recall      : 0.7733 (+/- 0.0243)
+2026-03-11 11:22:39 | Precision   : 0.8791 (+/- 0.0124)
+2026-03-11 11:22:39 | Specificity : 0.8935 (+/- 0.0133)
+2026-03-11 11:22:39 | F1          : 0.8226 (+/- 0.0146)
+2026-03-11 11:22:39 | AUC         : 0.9045 (+/- 0.0068)
+2026-03-11 11:22:39 | AUPR        : 0.9188 (+/- 0.0071)
+2026-03-11 11:22:39 | >>> Best Threshold: 0.4934 (OOF F1: 0.8270)
+2026-03-11 11:22:39 | 
+>>> Retraining Final Model on Full Data...
+2026-03-11 11:22:40 | --- Independent Test Results ---
+2026-03-11 11:22:40 |    AUC : 0.9030 | AUPR: 0.9155
+2026-03-11 11:22:40 |    ACC : 0.8333 | F1  : 0.8260
+2026-03-11 11:22:40 |    MCC : 0.6690 | Spec: 0.8753 | Sens: 0.7914
+2026-03-11 11:22:40 | >>> All Finished.
+2026-03-11 11:25:59 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-03-11 11:25:59 | >>> Loading Datasets...
+2026-03-11 11:26:02 | >>> Preprocessing Tabular Features...
+2026-03-11 11:26:06 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-03-11 11:26:06 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/kfold_indices.pkl...
+2026-03-11 11:26:06 | >>> Starting Deep OOF Feature Extraction...
+2026-03-11 11:26:07 |    Processed OOF Fold 2/10
+2026-03-11 11:26:08 |    Processed OOF Fold 4/10
+2026-03-11 11:26:09 |    Processed OOF Fold 6/10
+2026-03-11 11:26:10 |    Processed OOF Fold 8/10
+2026-03-11 11:26:11 |    Processed OOF Fold 10/10
+2026-03-11 11:26:11 | >>> Extracting Test Deep Features (Ensemble)...
+2026-03-11 11:26:11 | >>> Starting Test Ensemble Feature Extraction...
+2026-03-11 11:26:19 | >>> Fusing Features...
+2026-03-11 11:26:19 | Fused Shape: (9014, 2456)
+2026-03-11 11:26:19 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-03-11 11:26:19 | >>> Running Advanced Feature Selection (Global)...
+2026-03-11 11:33:37 | Feature Selection Complete. New Shape: (9014, 318)
+2026-03-11 11:33:37 | >>> Running GridSearchCV...
+2026-03-11 11:38:24 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 20, 'reg_alpha': 0.1, 'reg_lambda': 1.0, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-03-11 11:38:24 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-03-11 11:38:26 | --- CV Fold 2 ---
+2026-03-11 11:38:26 |    AUC : 0.8996 | AUPR: 0.9081
+2026-03-11 11:38:26 |    ACC : 0.8237 | F1  : 0.8077
+2026-03-11 11:38:26 |    MCC : 0.6566 | Spec: 0.9069 | Sens: 0.7406
+2026-03-11 11:38:28 | --- CV Fold 4 ---
+2026-03-11 11:38:28 |    AUC : 0.8870 | AUPR: 0.9084
+2026-03-11 11:38:28 |    ACC : 0.8237 | F1  : 0.8059
+2026-03-11 11:38:28 |    MCC : 0.6587 | Spec: 0.9157 | Sens: 0.7317
+2026-03-11 11:38:35 | --- CV Fold 6 ---
+2026-03-11 11:38:35 |    AUC : 0.9023 | AUPR: 0.9180
+2026-03-11 11:38:35 |    ACC : 0.8380 | F1  : 0.8345
+2026-03-11 11:38:35 |    MCC : 0.6766 | Spec: 0.8600 | Sens: 0.8160
+2026-03-11 11:38:40 | --- CV Fold 8 ---
+2026-03-11 11:38:40 |    AUC : 0.8952 | AUPR: 0.9157
+2026-03-11 11:38:40 |    ACC : 0.8302 | F1  : 0.8163
+2026-03-11 11:38:40 |    MCC : 0.6677 | Spec: 0.9047 | Sens: 0.7556
+2026-03-11 11:38:42 | --- CV Fold 10 ---
+2026-03-11 11:38:42 |    AUC : 0.9145 | AUPR: 0.9294
+2026-03-11 11:38:42 |    ACC : 0.8524 | F1  : 0.8452
+2026-03-11 11:38:42 |    MCC : 0.7077 | Spec: 0.8980 | Sens: 0.8067
+2026-03-11 11:38:42 | 
+=== 10-Fold CV Summary ===
+2026-03-11 11:38:42 | ACC         : 0.8302 (+/- 0.0110)
+2026-03-11 11:38:42 | MCC         : 0.6665 (+/- 0.0211)
+2026-03-11 11:38:42 | Recall      : 0.7655 (+/- 0.0271)
+2026-03-11 11:38:42 | Precision   : 0.8798 (+/- 0.0169)
+2026-03-11 11:38:42 | Specificity : 0.8948 (+/- 0.0190)
+2026-03-11 11:38:42 | F1          : 0.8182 (+/- 0.0137)
+2026-03-11 11:38:42 | AUC         : 0.9007 (+/- 0.0084)
+2026-03-11 11:38:42 | AUPR        : 0.9157 (+/- 0.0080)
+2026-03-11 11:38:42 | >>> Best Threshold: 0.4970 (OOF F1: 0.8218)
+2026-03-11 11:38:42 | 
+>>> Retraining Final Model on Full Data...
+2026-03-11 11:38:45 | --- Independent Test Results ---
+2026-03-11 11:38:45 |    AUC : 0.9047 | AUPR: 0.9154
+2026-03-11 11:38:45 |    ACC : 0.8318 | F1  : 0.8295
+2026-03-11 11:38:45 |    MCC : 0.6638 | Spec: 0.8452 | Sens: 0.8183
+2026-03-11 11:38:45 | >>> All Finished.
+2026-03-11 12:00:17 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-03-11 12:00:17 | >>> Loading Datasets...
+2026-03-11 12:00:20 | >>> Preprocessing Tabular Features...
+2026-03-11 12:00:24 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-03-11 12:00:24 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/kfold_indices.pkl...
+2026-03-11 12:00:24 | >>> Starting Deep OOF Feature Extraction...
+2026-03-11 12:00:25 |    Processed OOF Fold 2/10
+2026-03-11 12:00:26 |    Processed OOF Fold 4/10
+2026-03-11 12:00:27 |    Processed OOF Fold 6/10
+2026-03-11 12:00:28 |    Processed OOF Fold 8/10
+2026-03-11 12:00:29 |    Processed OOF Fold 10/10
+2026-03-11 12:00:29 | >>> Extracting Test Deep Features (Ensemble)...
+2026-03-11 12:00:29 | >>> Starting Test Ensemble Feature Extraction...
+2026-03-11 12:00:37 | >>> Fusing Features...
+2026-03-11 12:00:37 | Fused Shape: (9014, 2456)
+2026-03-11 12:00:37 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-03-11 12:00:37 | >>> Running Advanced Feature Selection (Global)...
+2026-03-11 12:08:01 | Feature Selection Complete. New Shape: (9014, 297)
+2026-03-11 12:08:01 | >>> Skipping GridSearchCV, applying exact best params from Feb 1st...
+2026-03-11 12:08:01 | Best Params: {'colsample_bytree': 0.6, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 15, 'reg_alpha': 0.1, 'reg_lambda': 1.0, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1, 'random_state': 42}
+2026-03-11 12:08:01 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-03-11 12:08:05 | --- CV Fold 2 ---
+2026-03-11 12:08:05 |    AUC : 0.9072 | AUPR: 0.9155
+2026-03-11 12:08:05 |    ACC : 0.8271 | F1  : 0.8152
+2026-03-11 12:08:05 |    MCC : 0.6596 | Spec: 0.8914 | Sens: 0.7627
+2026-03-11 12:08:10 | --- CV Fold 4 ---
+2026-03-11 12:08:10 |    AUC : 0.8966 | AUPR: 0.9144
+2026-03-11 12:08:10 |    ACC : 0.8293 | F1  : 0.8153
+2026-03-11 12:08:10 |    MCC : 0.6662 | Spec: 0.9047 | Sens: 0.7539
+2026-03-11 12:08:16 | --- CV Fold 6 ---
+2026-03-11 12:08:16 |    AUC : 0.9056 | AUPR: 0.9205
+2026-03-11 12:08:16 |    ACC : 0.8413 | F1  : 0.8366
+2026-03-11 12:08:16 |    MCC : 0.6838 | Spec: 0.8711 | Sens: 0.8115
+2026-03-11 12:08:21 | --- CV Fold 8 ---
+2026-03-11 12:08:21 |    AUC : 0.9010 | AUPR: 0.9179
+2026-03-11 12:08:21 |    ACC : 0.8291 | F1  : 0.8162
+2026-03-11 12:08:21 |    MCC : 0.6644 | Spec: 0.8980 | Sens: 0.7600
+2026-03-11 12:08:26 | --- CV Fold 10 ---
+2026-03-11 12:08:26 |    AUC : 0.9124 | AUPR: 0.9292
+2026-03-11 12:08:26 |    ACC : 0.8457 | F1  : 0.8374
+2026-03-11 12:08:26 |    MCC : 0.6949 | Spec: 0.8958 | Sens: 0.7956
+2026-03-11 12:08:26 | 
+=== 10-Fold CV Summary ===
+2026-03-11 12:08:26 | ACC         : 0.8339 (+/- 0.0119)
+2026-03-11 12:08:26 | MCC         : 0.6721 (+/- 0.0227)
+2026-03-11 12:08:26 | Recall      : 0.7797 (+/- 0.0242)
+2026-03-11 12:08:26 | Precision   : 0.8747 (+/- 0.0099)
+2026-03-11 12:08:26 | Specificity : 0.8882 (+/- 0.0104)
+2026-03-11 12:08:26 | F1          : 0.8242 (+/- 0.0144)
+2026-03-11 12:08:26 | AUC         : 0.9050 (+/- 0.0069)
+2026-03-11 12:08:26 | AUPR        : 0.9194 (+/- 0.0073)
+2026-03-11 12:08:26 | >>> Best Threshold: 0.4677 (OOF F1: 0.8287)
+2026-03-11 12:08:26 | 
+>>> Retraining Final Model on Full Data...
+2026-03-11 12:08:26 | --- Independent Test Results ---
+2026-03-11 12:08:26 |    AUC : 0.9027 | AUPR: 0.9149
+2026-03-11 12:08:26 |    ACC : 0.8326 | F1  : 0.8239
+2026-03-11 12:08:26 |    MCC : 0.6683 | Spec: 0.8815 | Sens: 0.7836
+2026-03-11 12:08:26 | >>> All Finished.
+2026-03-11 14:23:10 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-03-11 14:23:10 | >>> Loading Datasets...
+2026-03-11 14:23:22 | >>> Preprocessing Tabular Features...
+2026-03-11 14:23:28 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-03-11 14:23:28 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/kfold_indices.pkl...
+2026-03-11 14:23:28 | >>> Starting Deep OOF Feature Extraction...
+2026-03-11 14:23:29 |    Processed OOF Fold 2/10
+2026-03-11 14:23:31 |    Processed OOF Fold 4/10
+2026-03-11 14:23:32 |    Processed OOF Fold 6/10
+2026-03-11 14:23:34 |    Processed OOF Fold 8/10
+2026-03-11 14:23:35 |    Processed OOF Fold 10/10
+2026-03-11 14:23:35 | >>> Extracting Test Deep Features (Ensemble)...
+2026-03-11 14:23:35 | >>> Starting Test Ensemble Feature Extraction...
+2026-03-11 14:23:47 | >>> Fusing Features...
+2026-03-11 14:23:48 | Fused Shape: (9014, 2456)
+2026-03-11 14:23:48 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-03-11 14:23:48 | >>> Running Advanced Feature Selection (Global)...
+2026-03-11 14:53:28 | Feature Selection Complete. New Shape: (9014, 297)
+2026-03-11 14:53:28 | >>> Skipping GridSearchCV, applying exact best params from Feb 1st...
+2026-03-11 14:53:28 | Best Params: {'colsample_bytree': 0.6, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 15, 'reg_alpha': 0.1, 'reg_lambda': 1.0, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1, 'random_state': 42}
+2026-03-11 14:53:28 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-03-11 14:55:48 | --- CV Fold 2 ---
+2026-03-11 14:55:48 |    AUC : 0.9072 | AUPR: 0.9155
+2026-03-11 14:55:48 |    ACC : 0.8271 | F1  : 0.8152
+2026-03-11 14:55:48 |    MCC : 0.6596 | Spec: 0.8914 | Sens: 0.7627
+2026-03-11 14:58:58 | --- CV Fold 4 ---
+2026-03-11 14:58:58 |    AUC : 0.8966 | AUPR: 0.9144
+2026-03-11 14:58:58 |    ACC : 0.8293 | F1  : 0.8153
+2026-03-11 14:58:58 |    MCC : 0.6662 | Spec: 0.9047 | Sens: 0.7539
+2026-03-11 15:02:53 | --- CV Fold 6 ---
+2026-03-11 15:02:53 |    AUC : 0.9056 | AUPR: 0.9205
+2026-03-11 15:02:53 |    ACC : 0.8413 | F1  : 0.8366
+2026-03-11 15:02:53 |    MCC : 0.6838 | Spec: 0.8711 | Sens: 0.8115
+2026-03-11 15:05:23 | --- CV Fold 8 ---
+2026-03-11 15:05:23 |    AUC : 0.9010 | AUPR: 0.9179
+2026-03-11 15:05:23 |    ACC : 0.8291 | F1  : 0.8162
+2026-03-11 15:05:23 |    MCC : 0.6644 | Spec: 0.8980 | Sens: 0.7600
+2026-03-11 15:07:29 | --- CV Fold 10 ---
+2026-03-11 15:07:29 |    AUC : 0.9124 | AUPR: 0.9292
+2026-03-11 15:07:29 |    ACC : 0.8457 | F1  : 0.8374
+2026-03-11 15:07:29 |    MCC : 0.6949 | Spec: 0.8958 | Sens: 0.7956
+2026-03-11 15:07:29 | 
+=== 10-Fold CV Summary ===
+2026-03-11 15:07:29 | ACC         : 0.8339 (+/- 0.0119)
+2026-03-11 15:07:29 | MCC         : 0.6721 (+/- 0.0227)
+2026-03-11 15:07:29 | Recall      : 0.7797 (+/- 0.0242)
+2026-03-11 15:07:29 | Precision   : 0.8747 (+/- 0.0099)
+2026-03-11 15:07:29 | Specificity : 0.8882 (+/- 0.0104)
+2026-03-11 15:07:29 | F1          : 0.8242 (+/- 0.0144)
+2026-03-11 15:07:29 | AUC         : 0.9050 (+/- 0.0069)
+2026-03-11 15:07:29 | AUPR        : 0.9194 (+/- 0.0073)
+2026-03-11 15:07:29 | >>> Best Threshold: 0.4677 (OOF F1: 0.8287)
+2026-03-11 15:07:29 | 
+>>> Retraining Final Model on Full Data...
+2026-03-11 15:11:57 | --- Independent Test Results ---
+2026-03-11 15:11:57 |    AUC : 0.9038 | AUPR: 0.9124
+2026-03-11 15:11:57 |    ACC : 0.8339 | F1  : 0.8289
+2026-03-11 15:11:57 |    MCC : 0.6688 | Spec: 0.8628 | Sens: 0.8049
+2026-03-11 15:11:57 | >>> All Finished.
+2026-03-11 16:11:33 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-03-11 16:11:33 | >>> Loading Datasets...
+2026-03-11 16:11:39 | >>> Preprocessing Tabular Features...
+2026-03-11 16:11:44 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-03-11 16:11:44 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/kfold_indices.pkl...
+2026-03-11 16:11:44 | >>> Starting Deep OOF Feature Extraction...
+2026-03-11 16:11:45 |    Processed OOF Fold 2/10
+2026-03-11 16:11:46 |    Processed OOF Fold 4/10
+2026-03-11 16:11:47 |    Processed OOF Fold 6/10
+2026-03-11 16:11:48 |    Processed OOF Fold 8/10
+2026-03-11 16:11:49 |    Processed OOF Fold 10/10
+2026-03-11 16:11:49 | >>> Extracting Test Deep Features (Ensemble)...
+2026-03-11 16:11:49 | >>> Starting Test Ensemble Feature Extraction...
+2026-03-11 16:11:59 | >>> Fusing Features...
+2026-03-11 16:11:59 | Fused Shape: (9014, 2456)
+2026-03-11 16:11:59 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-03-11 16:12:00 | >>> Running Advanced Feature Selection (Global)...
+2026-03-11 16:33:41 | Feature Selection Complete. New Shape: (9014, 297)
+2026-03-11 16:33:41 | >>> Skipping GridSearchCV, applying exact best params from Feb 1st...
+2026-03-11 16:33:41 | Best Params: {'colsample_bytree': 0.6, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 15, 'reg_alpha': 0.1, 'reg_lambda': 1.0, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1, 'random_state': 42}
+2026-03-11 16:33:41 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-03-11 16:34:49 | --- CV Fold 2 ---
+2026-03-11 16:34:49 |    AUC : 0.9072 | AUPR: 0.9155
+2026-03-11 16:34:49 |    ACC : 0.8271 | F1  : 0.8152
+2026-03-11 16:34:49 |    MCC : 0.6596 | Spec: 0.8914 | Sens: 0.7627
+2026-03-11 16:36:47 | --- CV Fold 4 ---
+2026-03-11 16:36:47 |    AUC : 0.8966 | AUPR: 0.9144
+2026-03-11 16:36:47 |    ACC : 0.8293 | F1  : 0.8153
+2026-03-11 16:36:47 |    MCC : 0.6662 | Spec: 0.9047 | Sens: 0.7539
+2026-03-11 16:37:46 | --- CV Fold 6 ---
+2026-03-11 16:37:46 |    AUC : 0.9056 | AUPR: 0.9205
+2026-03-11 16:37:46 |    ACC : 0.8413 | F1  : 0.8366
+2026-03-11 16:37:46 |    MCC : 0.6838 | Spec: 0.8711 | Sens: 0.8115
+2026-03-11 16:38:39 | --- CV Fold 8 ---
+2026-03-11 16:38:39 |    AUC : 0.9010 | AUPR: 0.9179
+2026-03-11 16:38:39 |    ACC : 0.8291 | F1  : 0.8162
+2026-03-11 16:38:39 |    MCC : 0.6644 | Spec: 0.8980 | Sens: 0.7600
+2026-03-11 16:39:33 | --- CV Fold 10 ---
+2026-03-11 16:39:33 |    AUC : 0.9124 | AUPR: 0.9292
+2026-03-11 16:39:33 |    ACC : 0.8457 | F1  : 0.8374
+2026-03-11 16:39:33 |    MCC : 0.6949 | Spec: 0.8958 | Sens: 0.7956
+2026-03-11 16:39:33 | 
+=== 10-Fold CV Summary ===
+2026-03-11 16:39:33 | ACC         : 0.8339 (+/- 0.0119)
+2026-03-11 16:39:33 | MCC         : 0.6721 (+/- 0.0227)
+2026-03-11 16:39:33 | Recall      : 0.7797 (+/- 0.0242)
+2026-03-11 16:39:33 | Precision   : 0.8747 (+/- 0.0099)
+2026-03-11 16:39:33 | Specificity : 0.8882 (+/- 0.0104)
+2026-03-11 16:39:33 | F1          : 0.8242 (+/- 0.0144)
+2026-03-11 16:39:33 | AUC         : 0.9050 (+/- 0.0069)
+2026-03-11 16:39:33 | AUPR        : 0.9194 (+/- 0.0073)
+2026-03-11 16:39:33 | >>> Best Threshold: 0.4677 (OOF F1: 0.8287)
+2026-03-11 16:39:33 | 
+>>> Retraining Final Model on Full Data...
+2026-03-11 16:39:55 | --- Independent Test Results ---
+2026-03-11 16:39:55 |    AUC : 0.9027 | AUPR: 0.9149
+2026-03-11 16:39:55 |    ACC : 0.8326 | F1  : 0.8239
+2026-03-11 16:39:55 |    MCC : 0.6683 | Spec: 0.8815 | Sens: 0.7836
+2026-03-11 16:39:55 | >>> All Finished.
+2026-03-11 16:53:54 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-03-11 16:53:54 | >>> Loading Datasets...
+2026-03-11 16:53:56 | >>> Preprocessing Tabular Features...
+2026-03-11 16:54:01 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-03-11 16:54:01 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/kfold_indices.pkl...
+2026-03-11 16:54:01 | >>> Starting Deep OOF Feature Extraction...
+2026-03-11 16:54:02 |    Processed OOF Fold 2/10
+2026-03-11 16:54:03 |    Processed OOF Fold 4/10
+2026-03-11 16:54:04 |    Processed OOF Fold 6/10
+2026-03-11 16:54:04 |    Processed OOF Fold 8/10
+2026-03-11 16:54:05 |    Processed OOF Fold 10/10
+2026-03-11 16:54:05 | >>> Extracting Test Deep Features (Ensemble)...
+2026-03-11 16:54:05 | >>> Starting Test Ensemble Feature Extraction...
+2026-03-11 16:54:13 | >>> Fusing Features...
+2026-03-11 16:54:13 | Fused Shape: (9014, 2456)
+2026-03-11 16:54:13 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-03-11 16:54:13 | >>> Running Advanced Feature Selection (Global)...
+2026-03-11 16:57:57 | Feature Selection Complete. New Shape: (9014, 356)
+2026-03-11 16:57:57 | >>> Running GridSearchCV...
+2026-03-11 17:03:23 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 15, 'reg_alpha': 1.0, 'reg_lambda': 0.1, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-03-11 17:03:23 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-03-11 17:04:06 | --- CV Fold 2 ---
+2026-03-11 17:04:06 |    AUC : 0.9075 | AUPR: 0.9154
+2026-03-11 17:04:06 |    ACC : 0.8271 | F1  : 0.8138
+2026-03-11 17:04:06 |    MCC : 0.6608 | Spec: 0.8980 | Sens: 0.7561
+2026-03-11 17:04:45 | --- CV Fold 4 ---
+2026-03-11 17:04:45 |    AUC : 0.8988 | AUPR: 0.9160
+2026-03-11 17:04:45 |    ACC : 0.8282 | F1  : 0.8174
+2026-03-11 17:04:45 |    MCC : 0.6609 | Spec: 0.8869 | Sens: 0.7694
+2026-03-11 17:06:16 | --- CV Fold 6 ---
+2026-03-11 17:06:16 |    AUC : 0.9047 | AUPR: 0.9190
+2026-03-11 17:06:16 |    ACC : 0.8424 | F1  : 0.8386
+2026-03-11 17:06:16 |    MCC : 0.6856 | Spec: 0.8667 | Sens: 0.8182
+2026-03-11 17:07:26 | --- CV Fold 8 ---
+2026-03-11 17:07:26 |    AUC : 0.9010 | AUPR: 0.9185
+2026-03-11 17:07:26 |    ACC : 0.8313 | F1  : 0.8199
+2026-03-11 17:07:26 |    MCC : 0.6677 | Spec: 0.8936 | Sens: 0.7689
+2026-03-11 17:07:59 | --- CV Fold 10 ---
+2026-03-11 17:07:59 |    AUC : 0.9119 | AUPR: 0.9286
+2026-03-11 17:07:59 |    ACC : 0.8391 | F1  : 0.8292
+2026-03-11 17:07:59 |    MCC : 0.6825 | Spec: 0.8958 | Sens: 0.7822
+2026-03-11 17:07:59 | 
+=== 10-Fold CV Summary ===
+2026-03-11 17:07:59 | ACC         : 0.8328 (+/- 0.0111)
+2026-03-11 17:07:59 | MCC         : 0.6703 (+/- 0.0216)
+2026-03-11 17:07:59 | Recall      : 0.7752 (+/- 0.0202)
+2026-03-11 17:07:59 | Precision   : 0.8763 (+/- 0.0126)
+2026-03-11 17:07:59 | Specificity : 0.8904 (+/- 0.0131)
+2026-03-11 17:07:59 | F1          : 0.8225 (+/- 0.0128)
+2026-03-11 17:07:59 | AUC         : 0.9046 (+/- 0.0062)
+2026-03-11 17:07:59 | AUPR        : 0.9191 (+/- 0.0067)
+2026-03-11 17:07:59 | >>> Best Threshold: 0.4981 (OOF F1: 0.8235)
+2026-03-11 17:07:59 | 
+>>> Retraining Final Model on Full Data...
+2026-03-11 17:08:13 | --- Independent Test Results ---
+2026-03-11 17:08:13 |    AUC : 0.9023 | AUPR: 0.9137
+2026-03-11 17:08:13 |    ACC : 0.8339 | F1  : 0.8252
+2026-03-11 17:08:13 |    MCC : 0.6710 | Spec: 0.8835 | Sens: 0.7842
+2026-03-11 17:08:13 | >>> All Finished.
+2026-03-11 20:30:58 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-03-11 20:30:58 | >>> Loading Datasets...
+2026-03-11 20:31:00 | >>> Preprocessing Tabular Features...
+2026-03-11 20:31:05 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-03-11 20:31:05 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7/kfold_indices.pkl...
+2026-03-11 20:31:05 | >>> Starting Deep OOF Feature Extraction...
+2026-03-11 20:31:06 |    Processed OOF Fold 2/10
+2026-03-11 20:31:07 |    Processed OOF Fold 4/10
+2026-03-11 20:31:08 |    Processed OOF Fold 6/10
+2026-03-11 20:31:09 |    Processed OOF Fold 8/10
+2026-03-11 20:31:09 |    Processed OOF Fold 10/10
+2026-03-11 20:31:10 | >>> Extracting Test Deep Features (Ensemble)...
+2026-03-11 20:31:10 | >>> Starting Test Ensemble Feature Extraction...
+2026-03-11 20:31:18 | >>> Fusing Features...
+2026-03-11 20:31:18 | Fused Shape: (9014, 2456)
+2026-03-11 20:31:18 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-03-11 20:31:18 | >>> Running Advanced Feature Selection (Global)...
+2026-03-11 20:35:01 | Feature Selection Complete. New Shape: (9014, 357)
+2026-03-11 20:35:01 | >>> Running GridSearchCV...
+2026-03-11 20:40:27 | Best Params: {'colsample_bytree': 0.5, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 20, 'reg_alpha': 1.0, 'reg_lambda': 1.0, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-03-11 20:40:27 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-03-11 20:41:31 | --- CV Fold 2 ---
+2026-03-11 20:41:31 |    AUC : 0.9064 | AUPR: 0.9140
+2026-03-11 20:41:31 |    ACC : 0.8226 | F1  : 0.8100
+2026-03-11 20:41:31 |    MCC : 0.6510 | Spec: 0.8891 | Sens: 0.7561
+2026-03-11 20:43:25 | --- CV Fold 4 ---
+2026-03-11 20:43:25 |    AUC : 0.8960 | AUPR: 0.9147
+2026-03-11 20:43:25 |    ACC : 0.8282 | F1  : 0.8161
+2026-03-11 20:43:25 |    MCC : 0.6620 | Spec: 0.8936 | Sens: 0.7627
+2026-03-11 20:44:32 | --- CV Fold 6 ---
+2026-03-11 20:44:32 |    AUC : 0.9031 | AUPR: 0.9164
+2026-03-11 20:44:32 |    ACC : 0.8380 | F1  : 0.8326
+2026-03-11 20:44:32 |    MCC : 0.6774 | Spec: 0.8711 | Sens: 0.8049
+2026-03-11 20:45:08 | --- CV Fold 8 ---
+2026-03-11 20:45:08 |    AUC : 0.8956 | AUPR: 0.9144
+2026-03-11 20:45:08 |    ACC : 0.8224 | F1  : 0.8077
+2026-03-11 20:45:08 |    MCC : 0.6523 | Spec: 0.8980 | Sens: 0.7467
+2026-03-11 20:45:57 | --- CV Fold 10 ---
+2026-03-11 20:45:57 |    AUC : 0.9130 | AUPR: 0.9286
+2026-03-11 20:45:57 |    ACC : 0.8491 | F1  : 0.8400
+2026-03-11 20:45:57 |    MCC : 0.7024 | Spec: 0.9047 | Sens: 0.7933
+2026-03-11 20:45:57 | 
+>>> 10-Fold CV Summary: AUC: 0.9047 | ACC: 0.8328
+2026-03-11 20:45:57 | >>> Best Threshold: 0.4841 (OOF F1: 0.8271)
+2026-03-11 20:45:57 | 
+>>> Retraining Final Model on Full Data...
+2026-03-11 20:46:47 | --- Independent Test Results ---
+2026-03-11 20:46:47 |    AUC : 0.9066 | AUPR: 0.9171
+2026-03-11 20:46:47 |    ACC : 0.8315 | F1  : 0.8232
+2026-03-11 20:46:47 |    MCC : 0.6660 | Spec: 0.8784 | Sens: 0.7847
+2026-03-11 20:46:47 | >>> All Finished.
+2026-03-11 20:47:24 | Config: {
+  "PATH_META": "Datasets/processed_meta",
+  "PATH_SHAPE": "Datasets/processed_shape",
+  "PATH_BERT": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/DNAbert-2",
+  "PATH_VCF_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/feature/COSMIC",
+  "PRETRAINED_MODEL_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "OUTPUT_DIR": "/data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/",
+  "MODEL_PARAMS": {
+    "bert_in_dim": 768,
+    "spatial_in_dim": 19,
+    "num_experts": 5,
+    "fusion_dropout": 0.2
+  },
+  "N_FOLDS": 10,
+  "BATCH_SIZE": 64,
+  "GPU_ID": "0",
+  "FEATURE_SELECTION": true,
+  "MIN_FEATURES": 200
+}
+2026-03-11 20:47:24 | >>> Loading Datasets...
+2026-03-11 20:47:26 | >>> Preprocessing Tabular Features...
+2026-03-11 20:47:31 | >>> Extracting Train Deep Features (Layer 1 OOF)...
+2026-03-11 20:47:31 | >>> Loading K-Fold Indices from /data/gyy/Project/DeepSTF-new/DeepSTF/out/model-7-5-3/kfold_indices.pkl...
+2026-03-11 20:47:31 | >>> Starting Deep OOF Feature Extraction...
+2026-03-11 20:47:32 |    Processed OOF Fold 2/10
+2026-03-11 20:47:33 |    Processed OOF Fold 4/10
+2026-03-11 20:47:34 |    Processed OOF Fold 6/10
+2026-03-11 20:47:34 |    Processed OOF Fold 8/10
+2026-03-11 20:47:35 |    Processed OOF Fold 10/10
+2026-03-11 20:47:35 | >>> Extracting Test Deep Features (Ensemble)...
+2026-03-11 20:47:35 | >>> Starting Test Ensemble Feature Extraction...
+2026-03-11 20:47:43 | >>> Fusing Features...
+2026-03-11 20:47:43 | Fused Shape: (9014, 2456)
+2026-03-11 20:47:43 | >>> Cleaning Fused Features (Handling NaN/Inf)...
+2026-03-11 20:47:44 | >>> Running Advanced Feature Selection (Global)...
+2026-03-11 20:51:38 | Feature Selection Complete. New Shape: (9014, 297)
+2026-03-11 20:51:38 | >>> Running GridSearchCV...
+2026-03-11 20:56:25 | Best Params: {'colsample_bytree': 0.6, 'learning_rate': 0.01, 'max_depth': 4, 'num_leaves': 15, 'reg_alpha': 0.1, 'reg_lambda': 1.0, 'subsample': 0.6, 'n_estimators': 5000, 'n_jobs': -1}
+2026-03-11 20:56:25 | 
+>>> executing Strict 10-Fold CV (OOF)...
+2026-03-11 20:56:57 | --- CV Fold 2 ---
+2026-03-11 20:56:57 |    AUC : 0.9042 | AUPR: 0.9132
+2026-03-11 20:56:57 |    ACC : 0.8248 | F1  : 0.8115
+2026-03-11 20:56:57 |    MCC : 0.6563 | Spec: 0.8958 | Sens: 0.7539
+2026-03-11 20:58:03 | --- CV Fold 4 ---
+2026-03-11 20:58:03 |    AUC : 0.9027 | AUPR: 0.9186
+2026-03-11 20:58:03 |    ACC : 0.8392 | F1  : 0.8304
+2026-03-11 20:58:03 |    MCC : 0.6822 | Spec: 0.8914 | Sens: 0.7871
+2026-03-11 20:59:15 | --- CV Fold 6 ---
+2026-03-11 20:59:15 |    AUC : 0.9063 | AUPR: 0.9191
+2026-03-11 20:59:15 |    ACC : 0.8424 | F1  : 0.8360
+2026-03-11 20:59:15 |    MCC : 0.6870 | Spec: 0.8822 | Sens: 0.8027
+2026-03-11 21:00:09 | --- CV Fold 8 ---
+2026-03-11 21:00:09 |    AUC : 0.9018 | AUPR: 0.9182
+2026-03-11 21:00:09 |    ACC : 0.8224 | F1  : 0.8095
+2026-03-11 21:00:09 |    MCC : 0.6506 | Spec: 0.8891 | Sens: 0.7556
+2026-03-11 21:00:32 | --- CV Fold 10 ---
+2026-03-11 21:00:32 |    AUC : 0.9135 | AUPR: 0.9296
+2026-03-11 21:00:32 |    ACC : 0.8491 | F1  : 0.8404
+2026-03-11 21:00:32 |    MCC : 0.7021 | Spec: 0.9024 | Sens: 0.7956
+2026-03-11 21:00:32 | 
+>>> 10-Fold CV Summary: AUC: 0.9057 | ACC: 0.8336
+2026-03-11 21:00:32 | >>> Best Threshold: 0.4493 (OOF F1: 0.8274)
+2026-03-11 21:00:32 | 
+>>> Retraining Final Model on Full Data...
+2026-03-11 21:00:57 | --- Independent Test Results ---
+2026-03-11 21:00:57 |    AUC : 0.9068 | AUPR: 0.9160
+2026-03-11 21:00:57 |    ACC : 0.8346 | F1  : 0.8287
+2026-03-11 21:00:57 |    MCC : 0.6708 | Spec: 0.8690 | Sens: 0.8002
+2026-03-11 21:00:57 | >>> All Finished.
