@@ -333,4 +333,19 @@ if __name__ == "__main__":
 
     df_res.to_csv(os.path.join(MODEL_DIR, "test2_balanced_results_7_5_3_full.csv"), index=False)
 
+    print(">>> [Step 6] Saving Probabilities for Database...")
+    len_eosm = len(e_y)
+
+    # 拆分 EOSM 的概率并保存
+    probs_eosm = probs[:len_eosm]
+    df_eosm = pd.DataFrame({'label': e_y, 'prob': probs_eosm})
+    df_eosm.to_csv(os.path.join(MODEL_DIR, "pred_EOSM_scores.csv"), index=False)
+
+    # 拆分 SomaMutDB 的概率并保存
+    probs_soma = probs[len_eosm:]
+    df_soma = pd.DataFrame({'label': s_y, 'prob': probs_soma})
+    df_soma.to_csv(os.path.join(MODEL_DIR, "pred_SomaMutDB_scores.csv"), index=False)
+
+    print(">>> Probabilities successfully saved!")
+
 
